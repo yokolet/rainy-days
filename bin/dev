@@ -1,2 +1,5 @@
-#!/usr/bin/env ruby
-exec "./bin/rails", "server", *ARGV
+#!/usr/bin/env sh
+#exec "./bin/rails", "server", *ARGV
+export PORT="${PORT:-3000}"
+
+exec foreman start -f Procfile.dev "$@"
