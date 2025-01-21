@@ -1,14 +1,14 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
+
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-  <div class="">
-    <h1 class="">{{ msg }}</h1>
+  <div>
+    <div>Footer</div>
   </div>
 </template>
 
 <style scoped>
+
 </style>

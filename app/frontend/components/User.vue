@@ -1,14 +1,14 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
+
 </script>
 
 <template>
-  <div class="">
-    <h1 class="">{{ msg }}</h1>
+  <div>
+    <div>auth provider</div>
+    <div>User name here if logged in</div>
   </div>
 </template>
 
 <style scoped>
+
 </style>
