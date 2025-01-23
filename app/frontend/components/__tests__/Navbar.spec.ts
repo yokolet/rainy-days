@@ -1,10 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-
-import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
+import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils'
 import Navbar from '../Navbar.vue'
-import User from '../User.vue';
-import { useAuthStore } from '../../stores/auth';
-import { createTestingPinia } from '@pinia/testing';
+import User from '../User.vue'
+import { createTestingPinia } from '@pinia/testing'
 
 const createWrapper = () => shallowMount(Navbar ,{
   global: {
