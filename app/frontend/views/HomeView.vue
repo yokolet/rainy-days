@@ -5,7 +5,7 @@ import Hero from '../components/Hero.vue';
 
 <template>
   <main>
-    <Hero />
+    <Hero image="pink-cherry-blossom-in-rain.jpeg"/>
     <HelloWorld msg="Hello World!" />
   </main>
 </template>
