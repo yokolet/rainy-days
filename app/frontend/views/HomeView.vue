@@ -4,8 +4,8 @@ import Hero from '../components/Hero.vue';
 </script>
 
 <template>
-  <main>
-    <Hero image="pink-cherry-blossom-in-rain.jpeg"/>
+  <main id="home">
+    <Hero image="bg-pink-cherry-blossom"/>
     <HelloWorld msg="Hello World!" />
   </main>
 </template>

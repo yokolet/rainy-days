@@ -3,8 +3,8 @@ import Hero from '../components/Hero.vue'
 </script>
 
 <template>
-  <main>
-    <Hero image="purple-hydrangea-in-rain.jpeg"/>
+  <main id="about">
+    <Hero image="bg-purple-hydrangea"/>
     <h1>This is an about page</h1>
   </main>
 </template>
