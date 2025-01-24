@@ -15,9 +15,9 @@ const {isAuthenticated} = storeToRefs(store)
 
 <template>
   <header id="navbar">
-    <div class="w-full mx-auto p-4 bg-[#dfebe7] dark:bg-[#393f3d] text-[#271a1e] dark:text-[#f4f3f4]">
+    <div class="w-full mx-auto p-4 font-roboto-mono bg-[#dfebe7] dark:bg-[#393f3d] text-[#271a1e] dark:text-[#f4f3f4]">
       <nav class="flex items-center justify-between">
-        <div class="flex flex-row items-center justify-start space-x-4">
+        <div class="flex flex-row items-center justify-start space-x-4 font-semibold text-base md:text-lg lg:text-xl">
           <RouterLink to="/">Home</RouterLink>
           <RouterLink to="/about">About</RouterLink>
         </div>

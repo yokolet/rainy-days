@@ -7,6 +7,9 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        'roboto-mono': ['Roboto Mono', 'sans-serif'],
+      },
       backgroundImage: {
         'pink-cherry-blossom': "url('/assets/pink-cherry-blossom-in-rain.jpeg')",
         'purple-hydrangea': "url('/assets/purple-hydrangea-in-rain.jpeg')"
