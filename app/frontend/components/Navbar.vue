@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from 'vue-router';
 import User from '../components/User.vue';
 import { useAuthStore } from '../stores/auth';
 import { storeToRefs } from 'pinia';
@@ -10,25 +10,24 @@ const toggleDark = useToggle(isDark)
 
 const store = useAuthStore();
 const {isAuthenticated} = storeToRefs(store)
-
 </script>
 
 <template>
   <header id="navbar">
-    <div class="w-full mx-auto p-4 font-roboto-mono bg-[#dfebe7] dark:bg-[#393f3d] text-[#271a1e] dark:text-[#f4f3f4]">
+    <div class="w-full mx-auto p-4 font-roboto-mono font-bold bg-[#dfebe7] dark:bg-[#393f3d] text-[#2f2226] dark:text-[#f4f3f4]">
       <nav class="flex items-center justify-between">
-        <div class="flex flex-row items-center justify-start space-x-4 font-semibold text-base md:text-lg lg:text-xl">
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
+        <div class="flex flex-row items-center justify-start space-x-4 text-base md:text-lg lg:text-xl">
+          <RouterLink to="/" active-class="underline">Home</RouterLink>
+          <RouterLink to="/about" active-class="underline">About</RouterLink>
         </div>
-        <div class="flex flex-row items-center justify-end space-x-4 ">
+        <div class="flex flex-row items-center justify-end space-x-4">
           <User v-show="isAuthenticated" />
-          <div id="logout" class="button" v-if="isAuthenticated" @click="store.logout()">Logout</div>
-          <div id="login" class="button" v-else @click="store.authenticate()">Login</div>
+          <div id="logout" class="auth-button" v-if="isAuthenticated" @click="store.logout()">Logout</div>
+          <div id="login" class="auth-button" v-else @click="store.authenticate()">Login</div>
           <button
               id="theme-toggle"
-              class="text-gray-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none
-            focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+              class="hover:bg-gray-100 dark:hover:bg-[#737977] focus:outline-none
+            focus:ring-2 focus:ring-zinc-100 dark:focus:ring-zinc-600 rounded-lg text-sm p-2.5"
               @click="toggleDark()"
           >
             <!-- Dark SVG Icon -->
@@ -67,7 +66,8 @@ const {isAuthenticated} = storeToRefs(store)
 </template>
 
 <style scoped>
-.button {
-  @apply cursor-pointer px-4 py-2 border-2 rounded-lg
+.auth-button {
+  @apply cursor-pointer px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#737977] focus:outline-none
+  focus:ring-2 focus:ring-zinc-100 dark:focus:ring-zinc-600 text-base md:text-lg
 }
 </style>
