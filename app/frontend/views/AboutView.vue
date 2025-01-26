@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import Hero from '../components/Hero.vue'
+import About from '../components/About.vue'
 </script>
 
 <template>
   <main id="about">
     <Hero image="bg-purple-hydrangea"/>
-    <h1>This is an about page</h1>
+    <About />
   </main>
 </template>
 
