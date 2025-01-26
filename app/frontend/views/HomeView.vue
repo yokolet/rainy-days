@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import Posts from '../components/Posts.vue';
+import Hero from '../components/Hero.vue';
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
+  <main id="home">
+    <Hero image="bg-pink-cherry-blossom"/>
+    <Posts />
   </main>
 </template>
