@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from 'vue-router';
-import User from '../components/User.vue';
+import User from './User.vue';
 import { useAuthStore } from '../stores/auth';
 import { storeToRefs } from 'pinia';
 import { useDark, useToggle } from '@vueuse/core'
+import LoginModal from './LoginModal.vue';
+import { ref } from 'vue';
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark)
 
 const store = useAuthStore();
 const {isAuthenticated} = storeToRefs(store)
+
+const isOpen = ref<boolean>(true);
 </script>
 
 <template>
@@ -23,7 +27,9 @@ const {isAuthenticated} = storeToRefs(store)
         <div class="flex flex-row items-center justify-end space-x-4">
           <User v-show="isAuthenticated" />
           <div id="logout" class="auth-button" v-if="isAuthenticated" @click="store.logout()">Logout</div>
-          <div id="login" class="auth-button" v-else @click="store.authenticate()">Login</div>
+<!--          <div id="login" class="auth-button" v-else @click="store.authenticate()">Login</div>-->
+          <div id="login" class="auth-button" v-else @click="isOpen=true">Login</div>
+          <LoginModal :is-open="isOpen" @close="isOpen = false" />
           <button
               id="theme-toggle"
               class="hover:bg-gray-100 dark:hover:bg-[#737977] focus:outline-none
