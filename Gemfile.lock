@@ -121,12 +121,19 @@ GEM
       logger
     faraday-net_http (3.4.0)
       net-http (>= 0.5.0)
+    fiber-storage (1.0.0)
     foreman (0.88.1)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    graphiql-rails (1.10.1)
+      railties
+    graphql (2.4.9)
+      base64
+      fiber-storage
+      logger
     hashdiff (1.1.2)
     hashie (5.0.0)
     i18n (1.14.6)
@@ -428,6 +435,8 @@ DEPENDENCIES
   factory_bot_rails
   faker
   foreman (~> 0.88.1)
+  graphiql-rails
+  graphql (~> 2.4, >= 2.4.9)
   jbuilder
   kamal
   omniauth-github (~> 2.0, >= 2.0.1)
