@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  enum :provider, [:google, :github, :gitlab]
+
   # validation
   validates_presence_of :provider, :email, :uid
   validates_uniqueness_of :email, scope: :provider
