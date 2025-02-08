@@ -12,8 +12,9 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      # TODO
+      # for now, skips user authentication and always returns the last user
+      current_user:  User.all.last,
     }
     result = RainyDaysSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
