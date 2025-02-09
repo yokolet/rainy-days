@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_05_075625) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_09_090635) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
 
   create_table "comments", force: :cascade do |t|
@@ -37,11 +38,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_05_075625) do
   create_table "users", force: :cascade do |t|
     t.string "provider", null: false
     t.string "uid", null: false
-    t.string "email", null: false
+    t.citext "email", null: false
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email", "provider"], name: "index_users_on_email_and_provider", unique: true
+    t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true
   end
 
   add_foreign_key "comments", "comments", column: "reply_id", on_delete: :cascade
