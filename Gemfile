@@ -62,6 +62,8 @@ group :development, :test do
   gem "webmock"
   gem "faker"
   gem "factory_bot_rails"
+  gem "rspec-graphql_matchers"
+
   gem "byebug"
 end
 
