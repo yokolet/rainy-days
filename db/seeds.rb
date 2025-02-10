@@ -39,7 +39,9 @@ def seedUsers(emails, providers, uids)
 
   User.upsert_all(
     users,
-    unique_by: [:email, :provider],
+    on_duplicate: :update,
+    update_only: :provider,
+    unique_by: 'lower((email)::text)'
   )
 end
 
@@ -122,7 +124,7 @@ end
 
 emails = ["rank@koelpin.test", "waldo.reynolds@nikolaus.test", "lessie@hegmann-kuhlman.example",
                "fumiko@weber.example", "evalyn.macejkovic@torp.example"]
-providers = ["google", "gitlab", "github", "google", "github"]
+providers = [:google, :gitlab, :github, :google, :github]
 uids = ["dweirzniu8ghppw54ueswh4leby66kek", "55wy0jaoedlmt9yo", "dy4frnvn85",
         "qwzzh3xea0hsr5la", "ggqz1vjbd72a35bl8wmj4ym1"]
 

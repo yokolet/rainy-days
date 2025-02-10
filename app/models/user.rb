@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum :provider, [:google, :github, :gitlab]
+  enum :provider, {google: 0, github: 1, gitlab: 2}
 
   # validation
   validates_presence_of :provider, :email, :uid

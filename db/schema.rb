@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_09_090635) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_10_033707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -36,12 +36,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_09_090635) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "provider", null: false
     t.string "uid", null: false
     t.citext "email", null: false
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "provider", null: false
     t.index "lower((email)::text)", name: "index_users_on_lower_email", unique: true
   end
 
