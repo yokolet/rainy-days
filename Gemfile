@@ -36,6 +36,15 @@ gem "thruster", require: false
 gem 'vite_rails', '~> 3.0', '>= 3.0.19'
 gem 'foreman', '~> 0.88.1'
 
+# Social logins
+gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
+gem 'omniauth-gitlab', '~> 4.1'
+gem 'omniauth-google-oauth2', '~> 1.2', '>= 1.2.1'
+gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
+
+# GraphQL
+gem 'graphql', '~> 2.4', '>= 2.4.9'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -53,6 +62,8 @@ group :development, :test do
   gem "webmock"
   gem "faker"
   gem "factory_bot_rails"
+  gem "rspec-graphql_matchers"
+
   gem "byebug"
 end
 
@@ -61,3 +72,4 @@ group :development do
   gem "web-console"
 end
 
+gem "graphiql-rails", group: :development

@@ -5,7 +5,7 @@ import Footer from './components/Footer.vue';
 </script>
 
 <template>
-  <div class="min-h-screen w-full bg-[#eff5f3] dark:bg-[#484e4c]">
+  <div id="app" class="min-h-screen w-full bg-[#eff5f3] dark:bg-[#484e4c]">
     <Navbar />
     <RouterView />
     <Footer />
