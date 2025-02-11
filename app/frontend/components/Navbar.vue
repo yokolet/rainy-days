@@ -13,7 +13,7 @@ const toggleDark = useToggle(isDark)
 const store = useAuthStore();
 const {isAuthenticated} = storeToRefs(store)
 
-const isOpen = ref<boolean>(true);
+const isOpen = ref<boolean>(false);
 </script>
 
 <template>

@@ -61,7 +61,8 @@ defineEmits(['close'])
 <style scoped>
 .social-button {
   @apply mb-2 md:mb-0 bg-white dark:bg-stone-900 px-5 py-2 text-base shadow-sm font-medium tracking-wider
-  border text-stone-600 dark:text-stone-100 rounded-md hover:shadow-lg hover:bg-stone-100 hover:dark:bg-stone-700
+  border dark:border-stone-700 text-stone-600 dark:text-stone-100 rounded-md hover:shadow-lg
+  hover:bg-stone-100 hover:dark:bg-stone-700 hover:scale-105
 }
 
 .v-enter-active,
