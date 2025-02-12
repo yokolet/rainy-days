@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 #exec "./bin/rails", "server", *ARGV
-export PORT="${PORT:-3000}"
+#export PORT="${PORT:-3000}"
 
 exec foreman start -f Procfile.dev "$@"
