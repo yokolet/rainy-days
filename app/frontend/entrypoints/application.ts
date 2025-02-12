@@ -1,6 +1,6 @@
 import './index.css'
 
-import { createApp } from 'vue'
+import { createApp, h } from 'vue'
 import { createPinia } from 'pinia'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import App from '../App.vue'
 import router from '../router'
+import { setupGraphQL} from '../graphql/setupGraphQL'
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb
@@ -41,10 +42,14 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // import '~/index.css'
 library.add(fas, far, fab)
 
-const app = createApp(App)
+const app = createApp({
+  setup() {
+    setupGraphQL()
+  },
+  render: () => h(App),
+})
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(createPinia())
 app.use(router)
-
 app.mount('#app')
