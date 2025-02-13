@@ -54,34 +54,36 @@ const dummyData: IPost[] = [
   }
 ]
 
-const props = defineProps<{ id: number }>()
+const props = defineProps<{ id: string | string[] }>()
 
-const post = dummyData[props.id]
+const post = typeof props.id === 'string' ? dummyData[parseInt(props.id)] : undefined
 </script>
 
 <template>
   <section id="post-detail">
     <div class="w-11/12 mx-auto mt-4 items-center justify-center shadow-lg rounded-md font-roboto-mono
     p-2 md:p-4 text-sm md:text-base dark:text-white">
-      <div class="flex flex-col space-y-4">
-        <div class="font-bold text-lg">{{post.title}}</div>
-        <div class="flex flex-row items-center justify-between">
-          <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{post.userId}}</div>
-          <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{post.date}}</div>
-        </div>
-        <div>{{post.content}}</div>
-        <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
-        <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
-        <div v-for="comment in post.comments">
-          <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-md p-2">
-            <div class="flex flex-row justify-between">
-              <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{comment.userId}}</div>
-              <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{comment.date}}</div>
-            </div>
-            <div class="my-2 text-sm">{{comment.body}}</div>
-            <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
+      <div v-if="post">
+        <div class="flex flex-col space-y-4">
+          <div class="font-bold text-lg">{{post.title}}</div>
+          <div class="flex flex-row items-center justify-between">
+            <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{post.userId}}</div>
+            <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{post.date}}</div>
           </div>
+          <div>{{post.content}}</div>
+          <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
+          <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
+          <div v-for="comment in post.comments">
+            <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-md p-2">
+              <div class="flex flex-row justify-between">
+                <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{comment.userId}}</div>
+                <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{comment.date}}</div>
+              </div>
+              <div class="my-2 text-sm">{{comment.body}}</div>
+              <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
+            </div>
 
+          </div>
         </div>
       </div>
     </div>
