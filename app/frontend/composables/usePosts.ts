@@ -5,7 +5,7 @@ import { computed } from 'vue';
 export const usePosts = () => {
   const { result, loading, error } = useQuery(POSTS_QUERY);
 
-  const posts = computed(() => result.value?.posts)
+  const posts = computed(() => result.value?.posts ?? [])
 
   return {
     posts,

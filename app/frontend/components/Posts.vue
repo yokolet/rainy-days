@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { useDateFormat } from '@vueuse/core'
 import { usePosts } from '../composables/usePosts'
+import { formatDate, shortName } from '../composables/useFormat'
 
 const { posts, loading, error } = usePosts()
-
-const formatDate = (date: string) =>
-    useDateFormat(new Date(date), 'YYYY-MM-DD')
-
-const extractName = (name: string) =>
-  name.split('@')[0].slice(0, 6)
 
 </script>
 
@@ -25,7 +19,7 @@ const extractName = (name: string) =>
               <div class="grid grid-cols-1 md:grid-cols-12 md:gap-4 p-4 bg-white dark:bg-[#393f3d]
             border-b-2 border-[#dfebe7] dark:border-[#2e3231]
             hover:scale-95 md:hover:scale-100 md:hover:translate-x-1 hover:bg-gray-100 dark:hover:bg-[#484e4c]">
-                <div class="md:col-span-1 text-xs lg:text-sm tracking-tight">{{ extractName(post.email) }}</div>
+                <div class="md:col-span-1 text-xs lg:text-sm tracking-tight">{{ shortName(post.email) }}</div>
                 <div class="py-2 md:py-0 md:col-span-3 font-bold tracking-tight">{{ post.title }}</div>
                 <div class="md:col-span-5 md:text-sm lg:text-base md:tracking-tighter">{{ `${post.excerpt}...` }}</div>
                 <div class="md:col-span-3 flex flex-row justify-between mt-2">

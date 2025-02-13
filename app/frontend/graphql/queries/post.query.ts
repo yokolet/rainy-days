@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const POST_QUERY = gql`
-    query Posts ($id: ID!){
+    query Post ($id: ID!){
         post(id: $id) {
             id
             title
