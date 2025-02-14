@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router';
-import User from './User.vue';
-import { useAuthStore } from '../stores/auth';
-import { storeToRefs } from 'pinia';
+import { RouterLink, useRoute } from 'vue-router'
+import User from './User.vue'
+import { useAuthStore } from '../stores/auth'
+import { storeToRefs } from 'pinia'
 import { useDark, useToggle } from '@vueuse/core'
-import LoginModal from './LoginModal.vue';
-import { ref } from 'vue';
+import LoginModal from './LoginModal.vue'
+import PostFormModal from './PostFormModal.vue'
+import { ref } from 'vue'
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark)
@@ -13,7 +14,8 @@ const toggleDark = useToggle(isDark)
 const store = useAuthStore();
 const {isAuthenticated} = storeToRefs(store)
 
-const isOpen = ref<boolean>(false);
+const isOpen = ref<boolean>(false)
+const isPostOpen = ref<boolean>(false)
 </script>
 
 <template>
@@ -25,6 +27,8 @@ const isOpen = ref<boolean>(false);
           <RouterLink to="/about" active-class="underline">About</RouterLink>
         </div>
         <div class="flex flex-row items-center justify-end space-x-4">
+          <div id="post-form" class="" @click="isPostOpen=true"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></div>
+          <PostFormModal :is-open="isPostOpen" @close="isPostOpen = false" />
           <User v-show="isAuthenticated" />
           <div id="logout" class="auth-button" v-if="isAuthenticated" @click="store.logout()">Logout</div>
 <!--          <div id="login" class="auth-button" v-else @click="store.authenticate()">Login</div>-->
