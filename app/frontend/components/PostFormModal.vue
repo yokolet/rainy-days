@@ -1,11 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { usePostCreate } from '../composables/usePostCreate'
 
 const props = defineProps<{ isOpen: boolean }>()
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 
-const title = ref<string>('')
-const content = ref<string>('')
+const { title, content, postCreate, postCreateLoading, postCreateError,} = usePostCreate()
+
+const handleCreate = () => {
+  postCreate()
+  emit('close')
+}
+
+const handleCancel = () => {
+  title.value = ''
+  content.value = ''
+  emit('close')
+}
 
 </script>
 
@@ -55,8 +65,8 @@ const content = ref<string>('')
                 <textarea id="content-input" minlength="1" maxlength="1000" rows="5" class="form-style" v-model="content"></textarea>
               </label>
               <div class="flex flex-row items-center justify-around w-full space-x-10 mx-auto">
-                <button type="submit" class="button-style cancel-button">Cancel</button>
-                <button type="submit" class="button-style create-button">Create</button>
+                <button type="submit" class="button-style cancel-button" @click="handleCancel">Cancel</button>
+                <button type="submit" class="button-style create-button" @click="handleCreate">Create</button>
               </div>
             </div>
           </div>

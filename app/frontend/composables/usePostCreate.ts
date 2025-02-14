@@ -1,40 +1,49 @@
-import { useMutation } from '@vue/apollo-composable'
+import { useQuery, useMutation } from '@vue/apollo-composable'
 import { POSTS_QUERY, POST_MUTATION } from '../graphql/queries'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-export const usePostCreate = (title: string, content: string) => {
-  const variables = ref({
-    title,
-    content,
-  })
-  const { mutate: postCreate, loading: postCreateLoading, onDone, onError } = useMutation(
+export const usePostCreate = () => {
+  const { result } = useQuery(POSTS_QUERY)
+  const posts = computed(() => result.value?.posts ?? [])
+
+  const title = ref<string>('')
+  const content = ref<string>('')
+
+  const { mutate: postCreate, loading: postCreateLoading, error: postCreateError, onDone, onError } = useMutation(
     POST_MUTATION,
     () => ({
-      variables,
+      variables: {
+        title: title.value,
+        content: content.value,
+      },
       update: (cache, { data: { postCreate }}) => {
         let data = cache.readQuery({ query: POSTS_QUERY })
         data = {
+          ...data,
           posts: [
-            {
-              __typename: "Posts",
-              commentCount: 0,
-              excerpt: postCreate.post.content.substring(0, 30),
-              id: postCreate.post.id,
-              email: postCreate.post.user.email,
-              title: postCreate.post.title,
-              updatedAt: postCreate.post.updatedAt,
-            },
             ...data.posts,
+            postCreate,
           ],
         }
         cache.writeQuery({ query: POSTS_QUERY, data });
       }
     })
-  );
+  )
+
+  onDone(() => {
+    title.value = ''
+    content.value = ''
+  })
+
+  onError(error => {
+    console.log(error)
+  })
+
   return {
+    title,
+    content,
     postCreate,
     postCreateLoading,
-    onDone,
-    onError,
+    postCreateError,
   }
 }
