@@ -11,6 +11,7 @@ export const COMMENT_MUTATION = gql`
                 id
                 body
                 postId
+                replyId
                 userId
                 email
                 updatedAt

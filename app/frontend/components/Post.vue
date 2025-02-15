@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { usePost } from '../composables/usePost'
 import { formatDate, longerName } from '../composables/useFormat'
+import Comment from '../components/Comment.vue'
+import CommentFormModal from '../components/CommentFormModal.vue'
+import { ref } from 'vue';
 
 const props = defineProps<{ id: string | string[] }>()
 
 const id = typeof props.id === 'string' ? props.id : props.id[0]
 const { post, loading, error } = usePost(id)
+
+const isCommentFormOpen = ref<boolean>(false)
 
 </script>
 
@@ -23,17 +28,18 @@ const { post, loading, error } = usePost(id)
             <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(post.updatedAt) }}</div>
           </div>
           <div>{{post.content}}</div>
-          <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
+          <div
+              id="comment-form"
+              class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-500"
+              @click="isCommentFormOpen=true"
+          >
+            <font-awesome-icon :icon="['far', 'comment']" /> Comment
+          </div>
+          <CommentFormModal :is-open="isCommentFormOpen" :post-id="id" :reply-id="null" @close="isCommentFormOpen = false" />
+
           <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
           <div v-for="comment in post.comments">
-            <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-md p-2">
-              <div class="flex flex-row justify-between">
-                <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(comment.email) }}</div>
-                <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(comment.updatedAt) }}</div>
-              </div>
-              <div class="my-2 text-sm">{{comment.body}}</div>
-              <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"><font-awesome-icon :icon="['far', 'comment']" /> Reply</div>
-            </div>
+            <Comment :post-id="id" :comment="comment" />
           </div>
         </div>
       </div>

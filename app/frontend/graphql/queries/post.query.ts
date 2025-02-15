@@ -10,11 +10,11 @@ export const POST_QUERY = gql`
             comments {
                 id
                 body
-                email
                 postId
                 replyId
                 updatedAt
                 userId
+                email
             }
             user {
                 id
