@@ -2,16 +2,22 @@
 import { formatDate, longerName } from '../composables/useFormat'
 import { ref } from 'vue'
 import CommentFormModal from '../components/CommentFormModal.vue'
+import { getCommentGroup } from '../composables/useCommentTree'
 
-interface IComment {
+export interface IComment {
   id: string
   body: string
   email: string
   updatedAt: string
+  postId: string
+  replyId: string | null
+  userId: string
 }
 
-const props = defineProps<{postId: string, comment: IComment}>()
+const props = defineProps<{postId: string, comment: IComment, commentTree: IComment[][]}>()
 const isCommentFormOpen = ref<boolean>(false)
+
+const curComments = getCommentGroup(post.value.comments, props.comment.id)
 </script>
 
 <template>
