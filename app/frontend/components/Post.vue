@@ -13,8 +13,6 @@ const { post, loading, error } = usePost(id)
 
 const isCommentFormOpen = ref<boolean>(false)
 
-const commentTree = buildCommentTree(post.value.comments)
-const curComments = getCommentGroup(post.value.comments, null)
 </script>
 
 <template>
@@ -41,8 +39,8 @@ const curComments = getCommentGroup(post.value.comments, null)
           <CommentFormModal :is-open="isCommentFormOpen" :post-id="id" :reply-id="null" @close="isCommentFormOpen = false" />
 
           <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
-          <div v-for="comment in curComments" :key="comment.id">
-            <Comment :post-id="id" :comment="comment" :commentTree="commentTree" />
+          <div v-for="comment in getCommentGroup(post.comments, null)" :key="comment.id">
+            <Comment :post-id="id" :comment="comment" :commentTree="buildCommentTree(post.comments)" />
           </div>
         </div>
       </div>

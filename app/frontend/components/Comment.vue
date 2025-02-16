@@ -14,10 +14,10 @@ export interface IComment {
   userId: string
 }
 
-const props = defineProps<{postId: string, comment: IComment, commentTree: IComment[][]}>()
+const props = defineProps<{postId: string, comment: IComment, commentTree: { [key: string]: IComment[] }}>()
 const isCommentFormOpen = ref<boolean>(false)
 
-const curComments = getCommentGroup(post.value.comments, props.comment.id)
+const curComments = props.commentTree[props.comment.id]
 </script>
 
 <template>
@@ -39,6 +39,9 @@ const curComments = getCommentGroup(post.value.comments, props.comment.id)
         :reply-id="props.comment.id"
         @close="isCommentFormOpen = false"
     />
+    <div v-for="comment in curComments" :key="comment.id">
+      <Comment :post-id="props.postId" :comment="comment" :commentTree="props.commentTree" />
+    </div>
   </div>
 </template>
 
