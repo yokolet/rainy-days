@@ -3,7 +3,7 @@ import { usePost } from '../composables/usePost'
 import { formatDate, longerName } from '../composables/useFormat'
 import Comment from '../components/Comment.vue'
 import CommentFormModal from '../components/CommentFormModal.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue';
 import { buildCommentTree, getCommentGroup } from '../composables/useCommentTree'
 
 const props = defineProps<{ id: string | string[] }>()
@@ -13,6 +13,8 @@ const { post, loading, error } = usePost(id)
 
 const isCommentFormOpen = ref<boolean>(false)
 
+const commentTree = computed(() => post.value?.comments ? buildCommentTree(post.value?.comments) : {})
+const commentGroup = computed(() => post.value?.comments ? getCommentGroup(post.value?.comments, null) : [])
 </script>
 
 <template>
@@ -43,8 +45,8 @@ const isCommentFormOpen = ref<boolean>(false)
               @close="isCommentFormOpen = false"
           />
           <div id="comments-for-post" class="text-sm font-bold">Comments ({{post.comments.length}})</div>
-          <div v-for="comment in getCommentGroup(post.comments, null)" :key="comment.id">
-            <Comment :post-id="id" :comment="comment" :commentTree="buildCommentTree(post.comments)" />
+          <div v-for="comment in commentGroup" :key="comment.id">
+            <Comment :post-id="id" :comment="comment" :commentTree="commentTree" />
           </div>
         </div>
       </div>
