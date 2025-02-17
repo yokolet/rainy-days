@@ -1,87 +1,53 @@
 <script setup lang="ts">
-interface IComment {
-  id: number;
-  userId: string;
-  postId: number;
-  body: string;
-  date: string;
-}
+import { usePost } from '../composables/usePost'
+import { formatDate, longerName } from '../composables/useFormat'
+import Comment from '../components/Comment.vue'
+import CommentFormModal from '../components/CommentFormModal.vue'
+import { computed, ref } from 'vue';
+import { buildCommentTree, getCommentGroup } from '../composables/useCommentTree'
 
-interface IPost {
-  id: number;
-  userId: string;
-  title: string;
-  content: string;
-  date: string;
-  comments: IComment[];
-}
+const props = defineProps<{ id: string | string[] }>()
 
-const dummyData: IPost[] = [
-  {
-    id: 0,
-    userId: 'belva@fahey.test',
-    title: 'Recalled to Life',
-    content: 'Harum dolor impedit. Quo iste officia. Et ab nulla.',
-    date: '2024-07-19',
-    comments: [
-      {id: 0, userId: 'belva@fahey.test', postId: 0, body: 'Quaerat accusantium eum dicta.', date: '2024-08-01'}
-    ]
-  },
-  {
-    id: 1,
-    userId: 'petra@okeefe-lubowitz.example',
-    title: 'Down to a Sunless Sea',
-    content: 'Vero architecto quia. Et tenetur exercitationem. Dolor laborum corrupti.',
-    date: '2024-06-01',
-    comments: [
-      {id: 1, userId: 'Yun Hintz Grady', postId: 1, body: 'Dolorum veniam qui laborum.', date: '2024-06-01'},
-      {id: 2, userId: 'Yun Hintz Grady', postId: 1, body: 'Ipsam quisquam voluptatem iure.', date: '2024-11-11'},
-    ]
-  },
-  {
-    id: 2,
-    userId: 'Yun Hintz Grady',
-    title: 'The Daffodil Sky',
-    content: 'Architecto atque quia. Voluptates ullam aut. Repudiandae delectus explicabo.',
-    date: '2023-12-31',
-    comments: [
-      {id: 3, userId: 'petra@okeefe-lubowitz.example', postId: 1, body: 'Dolorum veniam qui laborum.', date: '2023-12-31'},
-      {id: 4, userId: 'belva@fahey.test', postId: 1, body: 'Ipsam quisquam voluptatem iure.', date: '2024-01-01'},
-      {id: 5, userId: 'Yun Hintz Grady', postId: 1, body: 'Debitis hic consequatur voluptatem.', date: '2024-12-31'},
-      {id: 6, userId: 'petra@okeefe-lubowitz.example', postId: 1, body: 'Qui est omnis laudantium.', date: '2025-01-01'},
-      {id: 7, userId: 'Yun Hintz Grady', postId: 1, body: 'Non qui beatae iusto.', date: '2025-01-15'},
-    ]
-  }
-]
+const id = typeof props.id === 'string' ? props.id : props.id[0]
+const { post, loading, error } = usePost(id)
 
-const props = defineProps<{ id: number }>()
+const isCommentFormOpen = ref<boolean>(false)
 
-const post = dummyData[props.id]
+const commentTree = computed(() => post.value?.comments ? buildCommentTree(post.value?.comments) : {})
+const commentGroup = computed(() => post.value?.comments ? getCommentGroup(post.value?.comments, null) : [])
 </script>
 
 <template>
   <section id="post-detail">
     <div class="w-11/12 mx-auto mt-4 items-center justify-center shadow-lg rounded-md font-roboto-mono
-    p-2 md:p-4 text-sm md:text-base dark:text-white">
-      <div class="flex flex-col space-y-4">
-        <div class="font-bold text-lg">{{post.title}}</div>
-        <div class="flex flex-row items-center justify-between">
-          <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{post.userId}}</div>
-          <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{post.date}}</div>
-        </div>
-        <div>{{post.content}}</div>
-        <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
-        <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
-        <div v-for="comment in post.comments">
-          <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-md p-2">
-            <div class="flex flex-row justify-between">
-              <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{comment.userId}}</div>
-              <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{comment.date}}</div>
-            </div>
-            <div class="my-2 text-sm">{{comment.body}}</div>
-            <div class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"><font-awesome-icon :icon="['far', 'comment']" /> Comment</div>
+    p-2 md:p-4 text-sm md:text-base dark:text-white bg-[#f6f9f8] dark:bg-[#3b3d3d]">
+      <div v-if="loading">Loading...</div>
+      <div v-else-if="error">Error {{ error.message }}</div>
+      <div v-else-if="post">
+        <div class="flex flex-col space-y-4">
+          <div class="font-bold text-lg">{{post.title}}</div>
+          <div class="flex flex-row items-center justify-between">
+            <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(post.user.email) }}</div>
+            <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(post.updatedAt) }}</div>
           </div>
-
+          <div>{{post.content}}</div>
+          <div
+              id="comment-form"
+              class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-500"
+              @click="isCommentFormOpen=true"
+          >
+            <font-awesome-icon :icon="['far', 'comment']" /> Comment
+          </div>
+          <CommentFormModal
+              :is-open="isCommentFormOpen"
+              :post-id="id"
+              :reply-id="null"
+              @close="isCommentFormOpen = false"
+          />
+          <div id="comments-for-post" class="text-sm font-bold">Comments ({{post.comments.length}})</div>
+          <div v-for="comment in commentGroup" :key="comment.id">
+            <Comment :post-id="id" :comment="comment" :commentTree="commentTree" />
+          </div>
         </div>
       </div>
     </div>

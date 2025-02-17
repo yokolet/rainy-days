@@ -9,7 +9,7 @@ module Resolvers
     def resolve
       sql = <<-SQL
 SELECT
-    posts.id, posts.title, left(posts.content, 30) as excerpt, posts.updated_at,
+    posts.id, posts.title, left(posts.content, 35) as excerpt, posts.updated_at,
     users.email, count(comments.id) as comment_count
 FROM "posts"
 left join users on posts.user_id = users.id left join comments on comments.post_id = posts.id
