@@ -36,9 +36,13 @@ const isCommentFormOpen = ref<boolean>(false)
           >
             <font-awesome-icon :icon="['far', 'comment']" /> Comment
           </div>
-          <CommentFormModal :is-open="isCommentFormOpen" :post-id="id" :reply-id="null" @close="isCommentFormOpen = false" />
-
-          <div class="text-sm font-bold">Comments ({{post.comments.length}})</div>
+          <CommentFormModal
+              :is-open="isCommentFormOpen"
+              :post-id="id"
+              :reply-id="null"
+              @close="isCommentFormOpen = false"
+          />
+          <div id="comments-for-post" class="text-sm font-bold">Comments ({{post.comments.length}})</div>
           <div v-for="comment in getCommentGroup(post.comments, null)" :key="comment.id">
             <Comment :post-id="id" :comment="comment" :commentTree="buildCommentTree(post.comments)" />
           </div>

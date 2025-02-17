@@ -21,12 +21,12 @@ const curComments = props.commentTree[props.comment.id]
 </script>
 
 <template>
-  <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-md p-2">
+  <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-sm pl-2 lg:pl-4 mt-2">
     <div class="flex flex-row justify-between">
       <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(props.comment.email) }}</div>
       <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(props.comment.updatedAt) }}</div>
     </div>
-    <div class="my-2 text-sm">{{props.comment.body}}</div>
+    <div class="my-2 text-sm tracking-tighter lg:tracking-normal">{{props.comment.body}}</div>
     <div
         class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"
         @click="isCommentFormOpen=true"

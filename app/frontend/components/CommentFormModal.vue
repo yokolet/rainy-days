@@ -23,10 +23,10 @@ const handleCancel = () => {
       <section id="commentFormModal" v-show="props.isOpen">
         <div
             @click="$emit('close')"
-            class="absolute bg-stone-500 dark:bg-stone-700 opacity-70 inset-0 z-0"
+            class="fixed bg-stone-500 dark:bg-stone-700 opacity-70 inset-0 z-0 bottom-0"
         ></div>
         <div
-            class="absolute inset-0 top-0 flex items-start justify-center h-fit w-4/5
+            class="fixed inset-0 top-0 h-fit w-4/5
             p-3 mx-auto my-auto rounded-xl shadow-lg bg-[#eff5f3] opacity-90 dark:bg-[#2e3231]"
         >
           <div class="w-full font-roboto-mono tracking-tight">
@@ -56,7 +56,7 @@ const handleCancel = () => {
               <h2 class="text-2xl font-bold py-4">New Comment</h2>
               <label for="#content-input" class="block w-11/12">
                 <span class="font-semibold">Comment</span> <span class="text-sm text-gray-600 dark:text-gray-400">1-300 characters</span>
-                <textarea id="content-input" minlength="1" maxlength="300" rows="5" class="form-style" v-model="body"></textarea>
+                <textarea id="content-input" minlength="1" maxlength="300" rows="3" class="form-style" v-model="body"></textarea>
               </label>
               <div class="flex flex-row items-center justify-around w-full space-x-10 mx-auto">
                 <button type="submit" class="button-style cancel-button" @click="handleCancel">Cancel</button>
@@ -79,7 +79,7 @@ const handleCancel = () => {
 }
 
 .button-style {
-  @apply block px-4 py-2 w-auto rounded-md border-2 border-white dark:border-stone-400 hover:-translate-y-0.5 transition duration-150
+  @apply block px-4 py-2 w-auto rounded-md border-[1px] border-white dark:border-stone-400 hover:-translate-y-0.5 transition duration-150
 }
 
 .cancel-button {
