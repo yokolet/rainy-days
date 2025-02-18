@@ -37,10 +37,10 @@ gem 'vite_rails', '~> 3.0', '>= 3.0.19'
 gem 'foreman', '~> 0.88.1'
 
 # Social logins
-gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
-gem 'omniauth-gitlab', '~> 4.1'
-gem 'omniauth-google-oauth2', '~> 1.2', '>= 1.2.1'
-gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
+# gem 'omniauth-github', '~> 2.0', '>= 2.0.1'
+# gem 'omniauth-gitlab', '~> 4.1'
+# gem 'omniauth-google-oauth2', '~> 1.2', '>= 1.2.1'
+# gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
 
 # GraphQL
 gem 'graphql', '~> 2.4', '>= 2.4.9'

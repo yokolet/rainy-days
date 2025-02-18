@@ -29,7 +29,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
 
   # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
+  config.active_support.deprecation = :raise
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
