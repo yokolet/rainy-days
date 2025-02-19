@@ -9,7 +9,16 @@ const store = useAuthStore()
 
 const handleGoogleLogin = async () => {
   const authFullPath = await store.getAuthFullPath('google_oauth2')
-  console.log(authFullPath)
+  window.open(authFullPath, '_self')
+}
+
+const handleGitHubLogin = async () => {
+  const authFullPath = await store.getAuthFullPath('github')
+  window.open(authFullPath, '_self')
+}
+
+const handleGitLabLogin = async () => {
+  const authFullPath = await store.getAuthFullPath('gitlab')
   window.open(authFullPath, '_self')
 }
 </script>
@@ -54,10 +63,10 @@ const handleGoogleLogin = async () => {
             <button class="social-button" @click="handleGoogleLogin">
               <span><font-awesome-icon :icon="['fab', 'google']" /> Google</span>
             </button>
-            <button class="social-button">
+            <button class="social-button" @click="handleGitHubLogin">
               <span><font-awesome-icon :icon="['fab', 'github']" /> GitHub</span>
             </button>
-            <button class="social-button">
+            <button class="social-button" @click="handleGitLabLogin">
               <span><font-awesome-icon :icon="['fab', 'gitlab']" /> GitLab</span>
             </button>
           </div>

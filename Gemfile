@@ -42,6 +42,9 @@ gem 'foreman', '~> 0.88.1'
 # gem 'omniauth-google-oauth2', '~> 1.2', '>= 1.2.1'
 # gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.2'
 
+# REST API client
+gem 'faraday', '~> 2.12', '>= 2.12.2'
+
 # GraphQL
 gem 'graphql', '~> 2.4', '>= 2.4.9'
 

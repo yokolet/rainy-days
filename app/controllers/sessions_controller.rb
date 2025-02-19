@@ -1,14 +1,20 @@
 class SessionsController < ApplicationController
+  PROVIDERS = {
+    "google_oauth2" => :google_oauth2,
+    "github" => :github,
+    "gitlab" => :gitlab,
+  }
+
   def prepare
-    provider = params[:provider]
+    provider = PROVIDERS[params[:provider]]
     state = generate_state
     verifier = generate_verifier
     code_challenge = generate_code_challenge(verifier)
-    pkce = {
+    pkce_params = {
       google_oauth2: {
         authorization_url: 'https://accounts.google.com/o/oauth2/auth',
         params: {
-          redirect_uri: Rails.application.credentials.oauth.google_oauth2.redirect_uri,
+          redirect_uri: Rails.application.credentials.oauth.google_oauth2.redirect_uri.strip,
           client_id: Rails.application.credentials.oauth.google_oauth2.client_id.strip,
           response_type: 'code',
           code_challenge: code_challenge,
@@ -20,7 +26,7 @@ class SessionsController < ApplicationController
       github: {
         authorization_url: 'https://github.com/login/oauth/authorize',
         params: {
-          redirect_uri: Rails.application.credentials.oauth.github.redirect_uri,
+          redirect_uri: Rails.application.credentials.oauth.github.redirect_uri.strip,
           client_id: Rails.application.credentials.oauth.github.client_id.strip,
           response_type: 'code',
           code_challenge: code_challenge,
@@ -30,9 +36,9 @@ class SessionsController < ApplicationController
         }
       },
       gitlab: {
-        authorization_url: 'https://gitlab.example.com/oauth/authorize',
+        authorization_url: 'https://gitlab.com/oauth/authorize',
         params: {
-          redirect_uri: Rails.application.credentials.oauth.gitlab.redirect_uri,
+          redirect_uri: Rails.application.credentials.oauth.gitlab.redirect_uri.strip,
           client_id: Rails.application.credentials.oauth.gitlab.client_id.strip,
           response_type: 'code',
           code_challenge: code_challenge,
@@ -44,16 +50,18 @@ class SessionsController < ApplicationController
     }
     session[state] = verifier
     session[:provider] = provider
-    render json: pkce[provider.to_sym].to_json
+    render json: pkce_params[provider].to_json
   rescue => error
     Rails.logger.error(error.to_s)
   end
 
   def create
-    state, code, scope = params[:state], params[:code], params[:scope]
-    puts("state: #{state}, code: #{code}, scope: #{scope}")
+    state, code = params[:state], params[:code]
     verifier = session[state]
     puts("verifier: #{verifier}")
+    access_token_params = get_access_token(session[:provider], verifier, code)
+    puts("access_token_params: #{access_token_params}")
+
     # @user = User.from_omniauth(request.env['omniauth.auth'])
     # if @user.persisted?
     #   session[:user_id] = @user.id
@@ -82,12 +90,69 @@ class SessionsController < ApplicationController
     SecureRandom.base64((length * 3) / 4).tr("+/", "-_").tr("=", "")
   end
 
-  def generate_code_challenge(code_verifier)
-    Digest::SHA256.base64digest(code_verifier).tr("+/", "-_").tr("=", "")
+  def generate_code_challenge(verifier)
+    Digest::SHA256.base64digest(verifier).tr("+/", "-_").tr("=", "")
   end
 
   def generate_state
     SecureRandom.uuid
   end
 
+  def get_access_token(provider, verifier, code)
+    provider = provider.to_sym
+    token_params = {
+      google_oauth2: {
+        endpoint: {
+          url: "https://oauth2.googleapis.com",
+          path: "/token",
+        },
+        params: {
+          redirect_uri: Rails.application.credentials.oauth.google_oauth2.redirect_uri.strip,
+          client_id: Rails.application.credentials.oauth.google_oauth2.client_id.strip,
+          client_secret: Rails.application.credentials.oauth.google_oauth2.client_secret.strip,
+          code: code,
+          code_verifier: verifier,
+          grant_type: 'authorization_code'
+        }
+      },
+      github: {
+        endpoint: {
+          url: "https://github.com",
+          path: "/login/oauth/access_token",
+        },
+        params: {
+          redirect_uri: Rails.application.credentials.oauth.github.redirect_uri.strip,
+          client_id: Rails.application.credentials.oauth.github.client_id.strip,
+          client_secret: Rails.application.credentials.oauth.github.client_secret.strip,
+          code: code,
+          code_verifier: verifier,
+          grant_type: 'authorization_code'
+        }
+      },
+      gitlab: {
+        endpoint: {
+          url: "https://gitlab.com",
+          path: "/oauth/token",
+        },
+        params: {
+          redirect_uri: Rails.application.credentials.oauth.gitlab.redirect_uri.strip,
+          client_id: Rails.application.credentials.oauth.gitlab.client_id.strip,
+          client_secret: Rails.application.credentials.oauth.gitlab.client_secret.strip,
+          code: code,
+          code_verifier: verifier,
+          grant_type: 'authorization_code'
+        }
+      }
+    }
+
+    conn = Faraday.new(
+      url: token_params[provider][:endpoint][:url],
+      headers: {
+        'Content-Type' => 'application/x-www-form-urlencoded',
+      }
+    )
+    response = conn.post(token_params[provider][:endpoint][:path],
+                         URI.encode_www_form(token_params[provider][:params]))
+    JSON.parse(response.body)
+  end
 end
