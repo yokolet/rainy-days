@@ -36,7 +36,7 @@ RSpec.describe "Sessions", type: :request do
             "redirect_uri" => "http://localhost:3906/auth/google_oauth2/callback"
           },
           headers: {
-            'Accept'=>'*/*',
+            'Accept'=>'application/json',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Content-Type'=>'application/x-www-form-urlencoded',
             'User-Agent'=>'Faraday v2.12.2'
@@ -49,6 +49,18 @@ RSpec.describe "Sessions", type: :request do
                     "refresh_token": "8257e65c97202ed1726cf9571600918f3bffb2544b26e00a61df9897668c33a1",
                   }.to_json,
                   headers: {})
+
+      stub_request(:get, "https://www.googleapis.com/auth/userinfo.profile").
+        with(
+          headers: {
+            'Accept'=>'application/json',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Bearer de6780bc506a0446309bd9362820ba8aed28aa506c71eedbe1c5c4f9dd350e54',
+            'Content-Type'=>'application/x-www-form-urlencoded',
+            'User-Agent'=>'Faraday v2.12.2'
+          }).
+        to_return(status: 200, body: "", headers: {})
+
       get "/auth/google_oauth2/callback",
           params: {
             "state" => "some-state",
