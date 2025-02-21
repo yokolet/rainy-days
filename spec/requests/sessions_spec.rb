@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Sessions", type: :request do
   describe "GET /sign_in/:provider" do
     it "returns pkce params for google oauth2" do
-      get "/sign_in/google_oauth2"
+      get "/sign_in/google"
       expect(response.body).not_to be_nil
       expect(JSON.parse(response.body)["authorization_url"]).not_to be_nil
     end
@@ -23,17 +23,17 @@ RSpec.describe "Sessions", type: :request do
 
   describe "GET /auth/:provider/callback" do
     it "is redirected after a successful process with google" do
-      session = { "some-state" => "verifier", :provider => "google_oauth2" }
+      session = { "some-state" => "verifier", :provider => "google" }
       allow_any_instance_of(SessionsController).to receive(:session).and_return(session)
       stub_request(:post, "https://oauth2.googleapis.com/token").
         with(
           body: {
-            "client_id" => Rails.application.credentials.oauth.google_oauth2.client_id.strip,
-            "client_secret" => Rails.application.credentials.oauth.google_oauth2.client_secret.strip,
+            "client_id" => Rails.application.credentials.oauth.google.client_id.strip,
+            "client_secret" => Rails.application.credentials.oauth.google.client_secret.strip,
             "code" => "long-alpha-numeric-code",
             "code_verifier" => nil,
             "grant_type" => "authorization_code",
-            "redirect_uri" => "http://localhost:3906/auth/google_oauth2/callback"
+            "redirect_uri" => "http://localhost:3906/auth/google/callback"
           },
           headers: {
             'Accept'=>'application/json',
@@ -60,12 +60,12 @@ RSpec.describe "Sessions", type: :request do
           }).to_return(status: 200,
                        body: {
                          "email": Faker::Internet.email,
-                         "uid": Faker::Name.first_name,
+                         "given_name": Faker::Name.first_name,
                          "picture": Faker::Avatar.image
                        }.to_json,
                        headers: {})
 
-      get "/auth/google_oauth2/callback",
+      get "/auth/google/callback",
           params: {
             "state" => "some-state",
             "code" => "long-alpha-numeric-code",
@@ -112,7 +112,7 @@ RSpec.describe "Sessions", type: :request do
         to_return(status: 200,
                        body: {
                          "email": Faker::Internet.email,
-                         "uid": Faker::Name.first_name,
+                         "login": Faker::Name.first_name,
                          "avatar_url": Faker::Avatar.image
                        }.to_json,
                        headers: {})
@@ -165,7 +165,7 @@ RSpec.describe "Sessions", type: :request do
         to_return(status: 200,
                        body: {
                          "email": Faker::Internet.email,
-                         "uid": Faker::Name.first_name,
+                         "username": Faker::Name.first_name,
                          "avatar_url": Faker::Avatar.image
                        }.to_json,
                        headers: {})

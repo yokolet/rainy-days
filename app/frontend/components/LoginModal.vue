@@ -8,7 +8,7 @@ defineEmits(['close'])
 const store = useAuthStore()
 
 const handleGoogleLogin = async () => {
-  const authFullPath = await store.getAuthFullPath('google_oauth2')
+  const authFullPath = await store.getAuthFullPath('google')
   window.open(authFullPath, '_self')
 }
 

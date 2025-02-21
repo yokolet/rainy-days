@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   PROVIDERS = {
-    "google_oauth2" => :google_oauth2,
+    "google" => :google,
     "github" => :github,
     "gitlab" => :gitlab,
   }
@@ -11,11 +11,11 @@ class SessionsController < ApplicationController
     verifier = generate_verifier
     code_challenge = generate_code_challenge(verifier)
     pkce_params = {
-      google_oauth2: {
+      google: {
         authorization_url: 'https://accounts.google.com/o/oauth2/auth',
         params: {
-          redirect_uri: Rails.application.credentials.oauth.google_oauth2.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.google_oauth2.client_id.strip,
+          redirect_uri: Rails.application.credentials.oauth.google.redirect_uri.strip,
+          client_id: Rails.application.credentials.oauth.google.client_id.strip,
           response_type: 'code',
           code_challenge: code_challenge,
           code_challenge_method: 'S256',
@@ -99,15 +99,15 @@ class SessionsController < ApplicationController
 
   def get_access_token(provider, verifier, code)
     token_params = {
-      google_oauth2: {
+      google: {
         endpoint: {
           url: "https://oauth2.googleapis.com",
           path: "/token",
         },
         params: {
-          redirect_uri: Rails.application.credentials.oauth.google_oauth2.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.google_oauth2.client_id.strip,
-          client_secret: Rails.application.credentials.oauth.google_oauth2.client_secret.strip,
+          redirect_uri: Rails.application.credentials.oauth.google.redirect_uri.strip,
+          client_id: Rails.application.credentials.oauth.google.client_id.strip,
+          client_secret: Rails.application.credentials.oauth.google.client_secret.strip,
           code: code,
           code_verifier: verifier,
           grant_type: 'authorization_code'
@@ -156,7 +156,7 @@ class SessionsController < ApplicationController
 
   def get_user_info(provider, access_token)
     user_info_params = {
-      google_oauth2: {
+      google: {
         endpoint: {
           url: "https://www.googleapis.com",
           path: "/oauth2/v3/userinfo",
@@ -187,7 +187,7 @@ class SessionsController < ApplicationController
 
   def extract_user_data(provider, user_info)
     keys = {
-      google_oauth2: {
+      google: {
         uid: :given_name,
         email: :email,
         image_url: :picture,
