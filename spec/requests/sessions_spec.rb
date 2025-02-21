@@ -22,7 +22,7 @@ RSpec.describe "Sessions", type: :request do
   end
 
   describe "GET /auth/:provider/callback" do
-    it "is redirected after a successful process" do
+    it "is redirected after a successful process with google" do
       session = { "some-state" => "verifier", :provider => "google_oauth2" }
       allow_any_instance_of(SessionsController).to receive(:session).and_return(session)
       stub_request(:post, "https://oauth2.googleapis.com/token").
@@ -31,7 +31,7 @@ RSpec.describe "Sessions", type: :request do
             "client_id" => Rails.application.credentials.oauth.google_oauth2.client_id.strip,
             "client_secret" => Rails.application.credentials.oauth.google_oauth2.client_secret.strip,
             "code" => "long-alpha-numeric-code",
-            "code_verifier" => "verifier",
+            "code_verifier" => nil,
             "grant_type" => "authorization_code",
             "redirect_uri" => "http://localhost:3906/auth/google_oauth2/callback"
           },
@@ -43,23 +43,27 @@ RSpec.describe "Sessions", type: :request do
           }).
         to_return(status: 200,
                   body: {
-                    "access_token": "de6780bc506a0446309bd9362820ba8aed28aa506c71eedbe1c5c4f9dd350e54",
+                    "access_token": "google-access-token",
                     "token_type": "bearer",
                     "expires_in": 7200,
-                    "refresh_token": "8257e65c97202ed1726cf9571600918f3bffb2544b26e00a61df9897668c33a1",
+                    "refresh_token": "google-refresh-token",
                   }.to_json,
                   headers: {})
 
-      stub_request(:get, "https://www.googleapis.com/auth/userinfo.profile").
+      stub_request(:get, "https://www.googleapis.com/oauth2/v3/userinfo").
         with(
           headers: {
-            'Accept'=>'application/json',
+            'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'Authorization'=>'Bearer de6780bc506a0446309bd9362820ba8aed28aa506c71eedbe1c5c4f9dd350e54',
-            'Content-Type'=>'application/x-www-form-urlencoded',
+            'Authorization'=>'Bearer google-access-token',
             'User-Agent'=>'Faraday v2.12.2'
-          }).
-        to_return(status: 200, body: "", headers: {})
+          }).to_return(status: 200,
+                       body: {
+                         "email": Faker::Internet.email,
+                         "uid": Faker::Name.first_name,
+                         "picture": Faker::Avatar.image
+                       }.to_json,
+                       headers: {})
 
       get "/auth/google_oauth2/callback",
           params: {
@@ -68,6 +72,109 @@ RSpec.describe "Sessions", type: :request do
             "scope" => "scopeA scopeB",
             "authuser" => "0",
             "prompt" => "consent"
+          }
+      expect(response).to be_redirect
+    end
+
+    it "is redirected after a successful process with github" do
+      session = { "some-state" => "verifier", :provider => "github" }
+      allow_any_instance_of(SessionsController).to receive(:session).and_return(session)
+      stub_request(:post, "https://github.com/login/oauth/access_token").
+        with(
+          body: {
+            "client_id" => Rails.application.credentials.oauth.github.client_id.strip,
+            "client_secret" => Rails.application.credentials.oauth.github.client_secret.strip,
+            "code" => "long-alpha-numeric-code",
+            "grant_type" => "authorization_code",
+            "redirect_uri" => "http://localhost:3906/auth/github/callback"},
+          headers: {
+            'Accept'=>'application/json',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Content-Type'=>'application/x-www-form-urlencoded',
+            'User-Agent'=>'Faraday v2.12.2'
+          }).
+        to_return(status: 200,
+                  body: {
+                    "access_token": "github-access-token",
+                    "token_type": "bearer",
+                    "scope": "user",
+                  }.to_json,
+                  headers: {})
+
+      stub_request(:get, "https://api.github.com/user").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Bearer github-access-token',
+            'User-Agent'=>'Faraday v2.12.2'
+          }).
+        to_return(status: 200,
+                       body: {
+                         "email": Faker::Internet.email,
+                         "uid": Faker::Name.first_name,
+                         "avatar_url": Faker::Avatar.image
+                       }.to_json,
+                       headers: {})
+
+      get "/auth/github/callback",
+          params: {
+            "state" => "some-state",
+            "code" => "long-alpha-numeric-code",
+            "scope" => "scopeC",
+          }
+      expect(response).to be_redirect
+    end
+
+    it "is redirected after a successful process with gitlab" do
+      session = { "some-state" => "verifier", :provider => "gitlab" }
+      allow_any_instance_of(SessionsController).to receive(:session).and_return(session)
+      stub_request(:post, "https://gitlab.com/oauth/token").
+        with(
+          body: {
+            "client_id" => Rails.application.credentials.oauth.gitlab.client_id.strip,
+            "client_secret" => Rails.application.credentials.oauth.gitlab.client_secret.strip,
+            "code" => "long-alpha-numeric-code",
+            "code_verifier" => nil,
+            "grant_type" => "authorization_code",
+            "redirect_uri" => "http://localhost:3906/auth/gitlab/callback"
+          },
+          headers: {
+            'Accept'=>'application/json',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Content-Type'=>'application/x-www-form-urlencoded',
+            'User-Agent'=>'Faraday v2.12.2'
+          }).
+        to_return(status: 200,
+                  body: {
+                    "access_token": "gitlab-access-token",
+                    "token_type": "bearer",
+                    "expires_in": 7200,
+                    "refresh_token": "gitlab-refresh-token",
+                  }.to_json,
+                  headers: {})
+
+      stub_request(:get, "https://gitlab.com/api/v4/user").
+        with(
+          headers: {
+            'Accept'=>'*/*',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'Authorization'=>'Bearer gitlab-access-token',
+            'User-Agent'=>'Faraday v2.12.2'
+          }).
+        to_return(status: 200,
+                       body: {
+                         "email": Faker::Internet.email,
+                         "uid": Faker::Name.first_name,
+                         "avatar_url": Faker::Avatar.image
+                       }.to_json,
+                       headers: {})
+
+      get "/auth/gitlab/callback",
+          params: {
+            "state" => "some-state",
+            "code" => "long-alpha-numeric-code",
+            "scope" => "scopeD",
           }
       expect(response).to be_redirect
     end

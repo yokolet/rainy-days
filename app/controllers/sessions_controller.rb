@@ -60,6 +60,7 @@ class SessionsController < ApplicationController
     user_data = extract_user_data(provider, user_info_params)
     puts("user_data: #{user_data}")
 
+
     # @user = User.from_omniauth(request.env['omniauth.auth'])
     # if @user.persisted?
     #   session[:user_id] = @user.id
@@ -187,23 +188,24 @@ class SessionsController < ApplicationController
   def extract_user_data(provider, user_info)
     keys = {
       google_oauth2: {
+        uid: :given_name,
         email: :email,
         image_url: :picture,
-        name: :name
       },
       github: {
+        uid: :login,
         email: :email,
         image_url: :avatar_url,
-        name: :name
       },
       gitlab: {
+        uid: :username,
         email: :email,
         image_url: :avatar_url,
-        name: :name
       },
     }
-    keys[provider].map do |key, value|
+    user = keys[provider].map do |key, value|
       [key, user_info[value]]
     end.to_h
+    user.merge({provider: provider})
   end
 end
