@@ -58,17 +58,16 @@ class SessionsController < ApplicationController
     access_token_params = get_access_token(provider, verifier, code)
     user_info_params = get_user_info(provider, access_token_params[:access_token])
     user_data = extract_user_data(provider, user_info_params)
-    puts("user_data: #{user_data}")
+    if User.find_or_initialize_by(email: user_data[:email]).
+      update(uid: user_data[:uid], provider: user_data[:provider], image: user_data[:image])
+    else
+      raise('Failed to find or update user')
+    end
 
-
-    # @user = User.from_omniauth(request.env['omniauth.auth'])
-    # if @user.persisted?
-    #   session[:user_id] = @user.id
-    #   redirect_path = request.env['omniauth.origin'] || dashboard_path
-    #   redirect_to redirect_path, notice: "Logged in as #{@user.name}"
-    # else
-    #   redirect_to root_url, alert: "Failure"
-    # end
+    cookies["rainy-days"] = {
+      value: user_data.to_json,
+      httponly: false
+    }
     redirect_to root_path, notice: "Logged In"
   rescue => e
     Rails.logger.error(e.to_s)
@@ -190,17 +189,17 @@ class SessionsController < ApplicationController
       google: {
         uid: :given_name,
         email: :email,
-        image_url: :picture,
+        image: :picture,
       },
       github: {
         uid: :login,
         email: :email,
-        image_url: :avatar_url,
+        image: :avatar_url,
       },
       gitlab: {
         uid: :username,
         email: :email,
-        image_url: :avatar_url,
+        image: :avatar_url,
       },
     }
     user = keys[provider].map do |key, value|

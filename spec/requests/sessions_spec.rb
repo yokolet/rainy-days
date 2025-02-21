@@ -64,7 +64,7 @@ RSpec.describe "Sessions", type: :request do
                          "picture": Faker::Avatar.image
                        }.to_json,
                        headers: {})
-
+      prev_count = User.count
       get "/auth/google/callback",
           params: {
             "state" => "some-state",
@@ -73,6 +73,7 @@ RSpec.describe "Sessions", type: :request do
             "authuser" => "0",
             "prompt" => "consent"
           }
+      expect(User.count).to eq(prev_count + 1)
       expect(response).to be_redirect
     end
 
@@ -117,12 +118,14 @@ RSpec.describe "Sessions", type: :request do
                        }.to_json,
                        headers: {})
 
+      prev_count = User.count
       get "/auth/github/callback",
           params: {
             "state" => "some-state",
             "code" => "long-alpha-numeric-code",
             "scope" => "scopeC",
           }
+      expect(User.count).to eq(prev_count + 1)
       expect(response).to be_redirect
     end
 
@@ -170,12 +173,14 @@ RSpec.describe "Sessions", type: :request do
                        }.to_json,
                        headers: {})
 
+      prev_count = User.count
       get "/auth/gitlab/callback",
           params: {
             "state" => "some-state",
             "code" => "long-alpha-numeric-code",
             "scope" => "scopeD",
           }
+      expect(User.count).to eq(prev_count + 1)
       expect(response).to be_redirect
     end
   end

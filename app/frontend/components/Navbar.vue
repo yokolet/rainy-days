@@ -8,10 +8,11 @@ import LoginModal from './LoginModal.vue'
 import PostFormModal from './PostFormModal.vue'
 import { ref } from 'vue'
 
-const isDark = useDark();
+const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
-const store = useAuthStore();
+const store = useAuthStore()
+store.updateUserData()
 const {isAuthenticated} = storeToRefs(store)
 
 const isOpen = ref<boolean>(false)
