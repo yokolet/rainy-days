@@ -1,6 +1,26 @@
 <script setup lang="ts">
+import { useAuthStore } from '../stores/auth';
+import { storeToRefs } from 'pinia';
+
 const props = defineProps<{ isOpen: boolean }>()
 defineEmits(['close'])
+
+const store = useAuthStore()
+
+const handleGoogleLogin = async () => {
+  const authFullPath = await store.getAuthFullPath('google')
+  window.open(authFullPath, '_self')
+}
+
+const handleGitHubLogin = async () => {
+  const authFullPath = await store.getAuthFullPath('github')
+  window.open(authFullPath, '_self')
+}
+
+const handleGitLabLogin = async () => {
+  const authFullPath = await store.getAuthFullPath('gitlab')
+  window.open(authFullPath, '_self')
+}
 </script>
 
 <template>
@@ -40,13 +60,13 @@ defineEmits(['close'])
             <h2 class="text-2xl font-bold py-4 text-stone-800 dark:text-stone-200">Log in with</h2>
           </div>
           <div class="flex flex-col p-3 mt-2 text-center space-y-4 md:space-x-4 md:block">
-            <button class="social-button">
+            <button class="social-button" @click="handleGoogleLogin">
               <span><font-awesome-icon :icon="['fab', 'google']" /> Google</span>
             </button>
-            <button class="social-button">
+            <button class="social-button" @click="handleGitHubLogin">
               <span><font-awesome-icon :icon="['fab', 'github']" /> GitHub</span>
             </button>
-            <button class="social-button">
+            <button class="social-button" @click="handleGitLabLogin">
               <span><font-awesome-icon :icon="['fab', 'gitlab']" /> GitLab</span>
             </button>
           </div>

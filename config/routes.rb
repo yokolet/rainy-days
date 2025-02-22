@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/graphql"
   end
+
   post "/graphql", to: "graphql#execute"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   # OAuth authentication routes
+  get '/sign_in/:provider', to: 'sessions#prepare'
   get 'auth/:provider/callback', to: 'sessions#create'
   delete '/sign_out', to: 'sessions#destroy', as: :sign_out
   get '/auth/failure' => 'sessions#failure'

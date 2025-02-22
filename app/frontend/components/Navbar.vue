@@ -8,11 +8,11 @@ import LoginModal from './LoginModal.vue'
 import PostFormModal from './PostFormModal.vue'
 import { ref } from 'vue'
 
-const isDark = useDark();
+const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
-const store = useAuthStore();
-const {isAuthenticated} = storeToRefs(store)
+const store = useAuthStore()
+const { isAuthenticated } = storeToRefs(store)
 
 const isOpen = ref<boolean>(false)
 const isPostOpen = ref<boolean>(false)
@@ -27,11 +27,12 @@ const isPostOpen = ref<boolean>(false)
           <RouterLink to="/about" active-class="underline">About</RouterLink>
         </div>
         <div class="flex flex-row items-center justify-end space-x-4">
-          <div id="post-form" class="" @click="isPostOpen=true"><font-awesome-icon :icon="['fas', 'pen-to-square']" /></div>
+          <div id="post-form" class="" v-show="isAuthenticated" @click="isPostOpen=true">
+            <font-awesome-icon :icon="['fas', 'pen-to-square']" />
+          </div>
           <PostFormModal :is-open="isPostOpen" @close="isPostOpen = false" />
           <User v-show="isAuthenticated" />
           <div id="logout" class="auth-button" v-if="isAuthenticated" @click="store.logout()">Logout</div>
-<!--          <div id="login" class="auth-button" v-else @click="store.authenticate()">Login</div>-->
           <div id="login" class="auth-button" v-else @click="isOpen=true">Login</div>
           <LoginModal :is-open="isOpen" @close="isOpen = false" />
           <button
