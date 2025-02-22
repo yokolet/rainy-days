@@ -5,19 +5,19 @@ RSpec.describe "Sessions", type: :request do
     it "returns pkce params for google oauth2" do
       get "/sign_in/google"
       expect(response.body).not_to be_nil
-      expect(JSON.parse(response.body)["authorization_url"]).not_to be_nil
+      expect(JSON.parse(response.body)["endpoint"]).not_to be_nil
     end
 
     it "returns pkce params for github" do
       get "/sign_in/github"
       expect(response.body).not_to be_nil
-      expect(JSON.parse(response.body)["authorization_url"]).not_to be_nil
+      expect(JSON.parse(response.body)["endpoint"]).not_to be_nil
     end
 
     it "returns pkce params for gitlab" do
       get "/sign_in/gitlab"
       expect(response.body).not_to be_nil
-      expect(JSON.parse(response.body)["authorization_url"]).not_to be_nil
+      expect(JSON.parse(response.body)["endpoint"]).not_to be_nil
     end
   end
 

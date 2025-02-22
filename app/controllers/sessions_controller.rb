@@ -10,44 +10,9 @@ class SessionsController < ApplicationController
     state = generate_state
     verifier = generate_verifier
     code_challenge = generate_code_challenge(verifier)
-    pkce_params = {
-      google: {
-        authorization_url: 'https://accounts.google.com/o/oauth2/auth',
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.google.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.google.client_id.strip,
-          response_type: 'code',
-          code_challenge: code_challenge,
-          code_challenge_method: 'S256',
-          scope: 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
-          state: state,
-        }
-      },
-      github: {
-        authorization_url: 'https://github.com/login/oauth/authorize',
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.github.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.github.client_id.strip,
-          response_type: 'code',
-          scope: 'user',
-          state: state,
-        }
-      },
-      gitlab: {
-        authorization_url: 'https://gitlab.com/oauth/authorize',
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.gitlab.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.gitlab.client_id.strip,
-          response_type: 'code',
-          code_challenge: code_challenge,
-          code_challenge_method: 'S256',
-          scope: 'read_user',
-          state: state,
-        }
-      },
-    }
     Rails.cache.fetch(state) { verifier }
-    render json: pkce_params[provider].to_json
+
+    render json: auth_params(provider, code_challenge, state).to_json
   rescue => error
     Rails.logger.error(error.to_s)
   end
@@ -96,113 +61,52 @@ class SessionsController < ApplicationController
     SecureRandom.uuid
   end
 
+  def auth_params(provider, code_challenge, state)
+    auth_params = Rails.application.config.rainy_days_oauth[provider][:authorization]
+    provider != :github ?
+      auth_params.merge({params: auth_params[:params].merge({code_challenge: code_challenge, state: state})}) :
+      auth_params.merge({params: auth_params[:params].merge({state: state})})
+  end
+
+  def token_params(provider, verifier, code)
+    token_params = Rails.application.config.rainy_days_oauth[provider][:token]
+    provider != :github ?
+      token_params.merge({params: token_params[:params].merge({code_verifier: verifier, code: code})}) :
+      token_params.merge({params: token_params[:params].merge({code: code})})
+  end
+
   def get_access_token(provider, verifier, code)
-    token_params = {
-      google: {
-        endpoint: {
-          url: "https://oauth2.googleapis.com",
-          path: "/token",
-        },
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.google.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.google.client_id.strip,
-          client_secret: Rails.application.credentials.oauth.google.client_secret.strip,
-          code: code,
-          code_verifier: verifier,
-          grant_type: 'authorization_code'
-        },
-      },
-      github: {
-        endpoint: {
-          url: "https://github.com",
-          path: "/login/oauth/access_token",
-        },
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.github.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.github.client_id.strip,
-          client_secret: Rails.application.credentials.oauth.github.client_secret.strip,
-          code: code,
-          grant_type: 'authorization_code'
-        },
-      },
-      gitlab: {
-        endpoint: {
-          url: "https://gitlab.com",
-          path: "/oauth/token",
-        },
-        params: {
-          redirect_uri: Rails.application.credentials.oauth.gitlab.redirect_uri.strip,
-          client_id: Rails.application.credentials.oauth.gitlab.client_id.strip,
-          client_secret: Rails.application.credentials.oauth.gitlab.client_secret.strip,
-          code: code,
-          code_verifier: verifier,
-          grant_type: 'authorization_code'
-        },
-      }
-    }
+    params = token_params(provider, verifier, code)
 
     conn = Faraday.new(
-      url: token_params[provider][:endpoint][:url],
+      url: params[:endpoint][:url],
       headers: {
         'Content-Type' => 'application/x-www-form-urlencoded',
         'Accept' => 'application/json',
       }
     )
-    response = conn.post(token_params[provider][:endpoint][:path],
-                         URI.encode_www_form(token_params[provider][:params]))
+    response = conn.post(params[:endpoint][:path],
+                         URI.encode_www_form(params[:params]))
     JSON.parse(response.body, symbolize_names: true)
   end
 
   def get_user_info(provider, access_token)
-    user_info_params = {
-      google: {
-        endpoint: {
-          url: "https://www.googleapis.com",
-          path: "/oauth2/v3/userinfo",
-        },
-      },
-      github: {
-        endpoint: {
-          url: "https://api.github.com",
-          path: "/user",
-        },
-      },
-      gitlab: {
-        endpoint: {
-          url: "https://gitlab.com",
-          path: "/api/v4/user",
-        },
-      },
-    }
+    user_params = Rails.application.config.rainy_days_oauth[provider][:user]
+
     conn = Faraday.new(
-      url: user_info_params[provider][:endpoint][:url],
+      url: user_params[:endpoint][:url],
       headers: {
         'Authorization' => "Bearer #{access_token}",
       }
     )
-    response = conn.get(user_info_params[provider][:endpoint][:path])
+    response = conn.get(user_params[:endpoint][:path])
     JSON.parse(response.body, symbolize_names: true)
   end
 
   def extract_user_data(provider, user_info)
-    keys = {
-      google: {
-        uid: :given_name,
-        email: :email,
-        image: :picture,
-      },
-      github: {
-        uid: :login,
-        email: :email,
-        image: :avatar_url,
-      },
-      gitlab: {
-        uid: :username,
-        email: :email,
-        image: :avatar_url,
-      },
-    }
-    user = keys[provider].map do |key, value|
+    keys = Rails.application.config.rainy_days_oauth[provider][:user_data]
+
+    user = keys.map do |key, value|
       [key, user_info[value]]
     end.to_h
     user.merge({provider: provider})

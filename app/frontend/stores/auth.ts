@@ -17,7 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
     console.log(response.data)
     const params = new URLSearchParams(response.data?.params).toString()
-    return `${response.data.authorization_url}?${params}`
+    return `${response.data.endpoint}?${params}`
   }
 
   const updateUserData = () => {
