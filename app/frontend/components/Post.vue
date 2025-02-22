@@ -5,6 +5,11 @@ import Comment from '../components/Comment.vue'
 import CommentFormModal from '../components/CommentFormModal.vue'
 import { computed, ref } from 'vue';
 import { buildCommentTree, getCommentGroup } from '../composables/useCommentTree'
+import { useAuthStore} from '../stores/auth'
+import { storeToRefs } from 'pinia';
+
+const store = useAuthStore()
+const { isAuthenticated } = storeToRefs(store)
 
 const props = defineProps<{ id: string | string[] }>()
 
@@ -34,6 +39,7 @@ const commentGroup = computed(() => post.value?.comments ? getCommentGroup(post.
           <div
               id="comment-form"
               class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-500"
+              v-show="isAuthenticated"
               @click="isCommentFormOpen=true"
           >
             <font-awesome-icon :icon="['far', 'comment']" /> Comment

@@ -2,7 +2,8 @@
 import { formatDate, longerName } from '../composables/useFormat'
 import { ref } from 'vue'
 import CommentFormModal from '../components/CommentFormModal.vue'
-import { getCommentGroup } from '../composables/useCommentTree'
+import { useAuthStore} from '../stores/auth'
+import { storeToRefs } from 'pinia';
 
 export interface IComment {
   id: string
@@ -14,6 +15,8 @@ export interface IComment {
   userId: string
 }
 
+const store = useAuthStore()
+const { isAuthenticated } = storeToRefs(store)
 const props = defineProps<{postId: string, comment: IComment, commentTree: { [key: string]: IComment[] }}>()
 const isCommentFormOpen = ref<boolean>(false)
 
@@ -29,6 +32,7 @@ const curComments = props.commentTree[props.comment.id]
     <div class="my-2 text-sm tracking-tighter lg:tracking-normal">{{props.comment.body}}</div>
     <div
         class="cursor-pointer hover:text-cyan-600 dark:hover:text-cyan-400 text-xs"
+        v-show="isAuthenticated"
         @click="isCommentFormOpen=true"
     >
       <font-awesome-icon :icon="['far', 'comment']" /> Reply
