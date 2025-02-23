@@ -8,5 +8,6 @@ RSpec.describe Types::UserType, type: :graphql do
   it { is_expected.to have_field(:id).of_type('ID!') }
   it { is_expected.to have_field(:provider).of_type('String!') }
   it { is_expected.to have_field(:email).of_type('String!') }
+  it { is_expected.to have_field(:username).of_type('String!') }
   it { is_expected.to have_field(:image).of_type('String') }
 end
