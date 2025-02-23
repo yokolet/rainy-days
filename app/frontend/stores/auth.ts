@@ -9,6 +9,12 @@ export const useAuthStore = defineStore('auth', () => {
   const provider = ref<string | null>(null)
   const imageUrl = ref<string | null>(null)
 
+  const csrfToken = () => {
+    const meta = document.querySelector('meta[name=csrf-token]')
+    const token = meta && meta.getAttribute('content')
+    return token ?? false
+  }
+
   const getAuthFullPath = async (provider: string) => {
     const url = `${window.location.protocol}//${window.location.host}/sign_in/${provider}`
     const response = await axios.get(url)
@@ -29,11 +35,16 @@ export const useAuthStore = defineStore('auth', () => {
       userId.value = cookieValues.uid
       provider.value = cookieValues.provider
       imageUrl.value = cookieValues.image_url
-      isAuthenticated.value = true
+      isAuthenticated.value = !!(userId.value && provider.value)
     }
   }
 
-  const logout = () => {
+  const logout = async () => {
+    const url = `${window.location.protocol}//${window.location.host}/sign_out`
+    const response = await axios.delete(url, { headers: { 'X-CSRF-Token': csrfToken() }})
+    if (response.status !== 204) {
+      throw new Error('Unable to logout')
+    }
     email.value = null
     userId.value = null
     provider.value = null
