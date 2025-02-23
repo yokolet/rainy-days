@@ -32,7 +32,7 @@ RSpec.describe "comment create", type: :graphql do
       result = RainyDaysSchema.execute(query, variables: variables, context: context)
       expect(result.dig("data", "commentCreate", "comment", "id")).not_to be_nil
       expect(result.dig("data", "commentCreate", "comment", "body")).to eql(attrs[:body])
-      expect(result.dig("data", "commentCreate", "comment", "userId")).not_to be_nil
+      expect(result.dig("data", "commentCreate", "comment", "username")).not_to be_nil
       expect(result.dig("data", "commentCreate", "comment", "email")).to eql(user.email)
       expect(result.dig("data", "commentCreate", "comment", "updatedAt")).not_to be_nil
     end
@@ -50,7 +50,8 @@ RSpec.describe "comment create", type: :graphql do
           id
           body
           postId
-          userId
+          replyId
+          username
           email
           updatedAt
         }

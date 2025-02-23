@@ -20,7 +20,7 @@ module Mutations
 
       sql = <<-SQL
 select posts.id, posts.title, posts.content, posts.updated_at,
-       users.id as user_id, users.email, users.provider
+       users.id as user_id, users.email, users.username, users.provider
 from posts left join users on posts.user_id = users.id
 where posts.id = ?;
       SQL
@@ -33,6 +33,7 @@ where posts.id = ?;
           user: {
             id: e["user_id"],
             email: e["email"],
+            username: e["username"],
             provider: User.providers.invert[e["provider"]]
           }
         }

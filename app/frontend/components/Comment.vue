@@ -9,10 +9,10 @@ export interface IComment {
   id: string
   body: string
   email: string
+  username: string
   updatedAt: string
   postId: string
   replyId: string | null
-  userId: string
 }
 
 const store = useAuthStore()
@@ -26,7 +26,7 @@ const curComments = props.commentTree[props.comment.id]
 <template>
   <div class="border-l-[1px] border-stone-500 dark:border-zinc-300 rounded-sm pl-2 lg:pl-4 mt-2">
     <div class="flex flex-row justify-between">
-      <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(props.comment.email) }}</div>
+      <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(props.comment.username) }}</div>
       <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(props.comment.updatedAt) }}</div>
     </div>
     <div class="my-2 text-sm tracking-tighter lg:tracking-normal">{{props.comment.body}}</div>

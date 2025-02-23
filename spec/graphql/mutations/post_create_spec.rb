@@ -32,6 +32,7 @@ RSpec.describe "post create", type: :graphql do
       expect(result.dig("data", "postCreate", "post", "title")).to eql(attrs[:title])
       expect(result.dig("data", "postCreate", "post", "user", "id")).not_to be_nil
       expect(result.dig("data", "postCreate", "post", "user", "email")).to eql(user.email)
+      expect(result.dig("data", "postCreate", "post", "user", "username")).to eql(user.username)
       expect(result.dig("data", "postCreate", "post", "user", "provider")).to eql(user.provider)
     end
   end
@@ -51,6 +52,7 @@ RSpec.describe "post create", type: :graphql do
           user {
             id
             email
+            username
             provider
           }
         }

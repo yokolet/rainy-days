@@ -13,12 +13,13 @@ export const POST_QUERY = gql`
                 postId
                 replyId
                 updatedAt
-                userId
+                username
                 email
             }
             user {
                 id
                 email
+                username
                 provider
                 image
             }

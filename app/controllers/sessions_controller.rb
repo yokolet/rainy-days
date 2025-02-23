@@ -25,7 +25,9 @@ class SessionsController < ApplicationController
     user_data = extract_user_data(provider, user_info_params)
     if User.find_or_initialize_by(email: user_data[:email]).
       update(uid: user_data[:uid], provider: user_data[:provider], image: user_data[:image])
+      session[:email] = user_data[:email]
     else
+      session[:email] = nil
       raise('Failed to find or update user')
     end
 
@@ -36,11 +38,16 @@ class SessionsController < ApplicationController
     redirect_to root_path, notice: "Logged In"
   rescue => e
     Rails.logger.error(e.to_s)
+    cookies["rainy-days"] = {
+      value: {error: e.to_s}.to_json,
+      httponly: false
+    }
+    redirect_to root_path, alert: "Failure"
   end
 
   def destroy
-    session[:user_id] = nil
-    redirect_to root_path, notice: "Logged out"
+    session[:email] = nil
+    head :no_content
   end
 
   def failure
