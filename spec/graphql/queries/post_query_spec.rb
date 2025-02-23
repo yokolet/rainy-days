@@ -24,9 +24,10 @@ RSpec.describe "post", type: :graphql do
       expect(result.dig("data", "post", "title")).to eql(post.title)
       expect(result.dig("data", "post", "content")).to eql(post.content)
       expect(result.dig("data", "post", "user", "email")).to eql(user.email)
+      expect(result.dig("data", "post", "user", "username")).to eql(user.username)
       expect(result.dig("data", "post", "comments").length).to eq(comments.length)
       expect(result.dig("data", "post", "comments").first["body"]).not_to be_nil
-      expect(result.dig("data", "post", "comments").first["userId"]).not_to be_nil
+      expect(result.dig("data", "post", "comments").first["username"]).not_to be_nil
     end
   end
 
@@ -40,12 +41,13 @@ RSpec.describe "post", type: :graphql do
         user {
           id
           email
+          username
           provider
         }
         comments {
           id
           body
-          userId
+          username
           email
         }
       }
