@@ -32,7 +32,7 @@ const commentGroup = computed(() => post.value?.comments ? getCommentGroup(post.
         <div class="flex flex-col space-y-4">
           <div class="font-bold text-lg">{{post.title}}</div>
           <div class="flex flex-row items-center justify-between">
-            <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(post.user.email) }}</div>
+            <div class="tracking-tight text-xs text-stone-700 dark:text-zinc-200">{{ longerName(post.user.username) }}</div>
             <div class="tracking-tight text-xs text-stone-500 dark:text-zinc-400">{{ formatDate(post.updatedAt) }}</div>
           </div>
           <div>{{post.content}}</div>
