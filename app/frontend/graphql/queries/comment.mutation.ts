@@ -12,7 +12,7 @@ export const COMMENT_MUTATION = gql`
                 body
                 postId
                 replyId
-                userId
+                username
                 email
                 updatedAt
             }

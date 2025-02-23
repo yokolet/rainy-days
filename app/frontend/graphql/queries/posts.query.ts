@@ -4,10 +4,11 @@ export const POSTS_QUERY = gql`
     query Posts {
         posts {
             id
-            email
             title
             excerpt
             commentCount
+            email
+            username
             updatedAt
         }
     }

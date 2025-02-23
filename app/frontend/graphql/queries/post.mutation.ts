@@ -14,6 +14,7 @@ export const POST_MUTATION = gql`
                 user {
                     id
                     email
+                    username
                     provider
                 }
             }
