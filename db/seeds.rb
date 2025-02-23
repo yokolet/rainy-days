@@ -8,32 +8,32 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-def seedUsers(emails, providers, uids)
+def seedUsers(emails, providers, usernames)
   users = [
     {
       email: emails[0],
       provider: providers[0],
-      uid: uids[0],
+      username: usernames[0],
     },
     {
       email: emails[1],
       provider: providers[1],
-      uid: uids[1],
+      username: usernames[1],
     },
     {
       email: emails[2],
       provider: providers[2],
-      uid: uids[2],
+      username: usernames[2],
     },
     {
       email: emails[3],
       provider: providers[3],
-      uid: uids[3],
+      username: usernames[3],
     },
     {
       email: emails[4],
       provider: providers[4],
-      uid: uids[4],
+      username: usernames[4],
     },
   ]
 
@@ -125,9 +125,9 @@ end
 emails = ["rank@koelpin.test", "waldo.reynolds@nikolaus.test", "lessie@hegmann-kuhlman.example",
                "fumiko@weber.example", "evalyn.macejkovic@torp.example"]
 providers = [:google, :gitlab, :github, :google, :github]
-uids = ["dweirzniu8ghppw54ueswh4leby66kek", "55wy0jaoedlmt9yo", "dy4frnvn85",
-        "qwzzh3xea0hsr5la", "ggqz1vjbd72a35bl8wmj4ym1"]
+usernames = ["Amber", "dannette.rau", "clemencia",
+        "Teri", "latia.streich"]
 
-seedUsers(emails, providers, uids)
+seedUsers(emails, providers, usernames)
 seedPosts(emails, providers)
 seedComments(emails, providers)
