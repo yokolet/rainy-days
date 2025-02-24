@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     user_info_params = get_user_info(provider, access_token_params[:access_token])
     user_data = extract_user_data(provider, user_info_params)
     if User.find_or_initialize_by(email: user_data[:email]).
-      update(uid: user_data[:uid], provider: user_data[:provider], image: user_data[:image])
+      update(username: user_data[:username], provider: user_data[:provider], image: user_data[:image])
       session[:email] = user_data[:email]
     else
       session[:email] = nil
