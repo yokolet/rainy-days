@@ -31,7 +31,7 @@ Rails.application.config.rainy_days_oauth = {
       },
     },
     user_data: {
-      uid: :given_name,
+      username: :given_name,
       email: :email,
       image: :picture,
     }
@@ -65,7 +65,7 @@ Rails.application.config.rainy_days_oauth = {
       },
     },
     user_data: {
-      uid: :login,
+      username: :login,
       email: :email,
       image: :avatar_url,
     },
@@ -100,7 +100,7 @@ Rails.application.config.rainy_days_oauth = {
       },
     },
     user_data: {
-      uid: :username,
+      username: :username,
       email: :email,
       image: :avatar_url,
     },
