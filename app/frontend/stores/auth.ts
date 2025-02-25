@@ -5,7 +5,7 @@ import axios from 'axios'
 export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = ref<boolean>(false)
   const email = ref<string | null>(null)
-  const userId = ref<string | null>(null)
+  const username = ref<string | null>(null)
   const provider = ref<string | null>(null)
   const imageUrl = ref<string | null>(null)
 
@@ -32,10 +32,10 @@ export const useAuthStore = defineStore('auth', () => {
       const decodedCookie = decodeURIComponent(document.cookie)
       const cookieValues = JSON.parse(decodedCookie.slice(cookieHeader.length))
       email.value = cookieValues.email
-      userId.value = cookieValues.uid
+      username.value = cookieValues.username
       provider.value = cookieValues.provider
       imageUrl.value = cookieValues.image_url
-      isAuthenticated.value = !!(userId.value && provider.value)
+      isAuthenticated.value = !!(username.value && provider.value)
     }
   }
 
@@ -46,7 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
       throw new Error('Unable to logout')
     }
     email.value = null
-    userId.value = null
+    username.value = null
     provider.value = null
     imageUrl.value = null
     isAuthenticated.value = false
@@ -56,5 +56,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { isAuthenticated, email, userId, provider, imageUrl, getAuthFullPath, updateUserData, logout };
+  return { isAuthenticated, email, username, provider, imageUrl, getAuthFullPath, updateUserData, logout };
 })
