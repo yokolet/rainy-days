@@ -1,9 +1,5 @@
 class SessionsController < ApplicationController
-  PROVIDERS = {
-    "google" => :google,
-    "github" => :github,
-    "gitlab" => :gitlab,
-  }
+  include RainyDaysOauth
 
   def prepare
     provider = PROVIDERS[params[:provider]]
@@ -68,20 +64,6 @@ class SessionsController < ApplicationController
     SecureRandom.uuid
   end
 
-  def auth_params(provider, code_challenge, state)
-    auth_params = Rails.application.config.rainy_days_oauth[provider][:authorization]
-    provider != :github ?
-      auth_params.merge({params: auth_params[:params].merge({code_challenge: code_challenge, state: state})}) :
-      auth_params.merge({params: auth_params[:params].merge({state: state})})
-  end
-
-  def token_params(provider, verifier, code)
-    token_params = Rails.application.config.rainy_days_oauth[provider][:token]
-    provider != :github ?
-      token_params.merge({params: token_params[:params].merge({code_verifier: verifier, code: code})}) :
-      token_params.merge({params: token_params[:params].merge({code: code})})
-  end
-
   def get_access_token(provider, verifier, code)
     params = token_params(provider, verifier, code)
 
@@ -98,7 +80,7 @@ class SessionsController < ApplicationController
   end
 
   def get_user_info(provider, access_token)
-    user_params = Rails.application.config.rainy_days_oauth[provider][:user]
+    user_params = user_info_params(provider)
 
     conn = Faraday.new(
       url: user_params[:endpoint][:url],
@@ -111,7 +93,7 @@ class SessionsController < ApplicationController
   end
 
   def extract_user_data(provider, user_info)
-    keys = Rails.application.config.rainy_days_oauth[provider][:user_data]
+    keys = key_params(provider)
 
     user = keys.map do |key, value|
       [key, user_info[value]]
