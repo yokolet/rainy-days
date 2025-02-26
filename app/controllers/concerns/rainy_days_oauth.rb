@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative './google_oauth'
-require_relative './github_oauth'
-require_relative './gitlab_oauth'
+require_relative './google_oauth.rb'
+require_relative './github_oauth.rb'
+require_relative './gitlab_oauth.rb'
 
 PROVIDERS = {
   "google" => :google,
@@ -11,9 +11,9 @@ PROVIDERS = {
 }
 
 ALL_AUTH_PARAMS = {
-  google: google_oauth_params,
-  github: github_oauth_params,
-  gitlab: gitlab_oauth_params,
+  google: Class.new.extend(GoogleOauth).google_oauth_params,
+  github: Class.new.extend(GithubOauth).github_oauth_params,
+  gitlab: Class.new.extend(GitlabOauth).gitlab_oauth_params,
 }
 
 module RainyDaysOauth
