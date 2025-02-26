@@ -1,7 +1,22 @@
 services:
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+
   web:
     build: .
     environment:
       - RAILS_MASTER_KEY
     ports:
       - "3000:3000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:

@@ -82,13 +82,20 @@ production:
   primary: &primary_production
     <<: *default
     database: rainy_days_production
-    username: rainy_days
-    password: <%= ENV["RAINY_DAYS_DATABASE_PASSWORD"] %>
+    host: db
+    username: postgres
+    password: postgres
   cache:
     <<: *primary_production
     database: rainy_days_production_cache
     migrations_paths: db/cache_migrate
+    host: db
+    username: postgres
+    password: postgres
   queue:
     <<: *primary_production
     database: rainy_days_production_queue
     migrations_paths: db/queue_migrate
+    host: db
+    username: postgres
+    password: postgres

@@ -46,7 +46,7 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 
-RUN apt-get update -qq && apt-get install -y -qq nodejs npm
+RUN apt-get update -qq && apt-get install -y -qq nodejs npm postgresql-client
 RUN npm install --force
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
