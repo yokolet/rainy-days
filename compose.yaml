@@ -11,10 +11,9 @@ services:
 
   web:
     build: .
-    environment:
-      - RAILS_MASTER_KEY
+    env_file: ".env"
     ports:
-      - "3000:3000"
+      - "3906:3906"
     depends_on:
       - db
 
