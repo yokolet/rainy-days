@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from '@vue/apollo-composable'
 import { POSTS_QUERY, POST_MUTATION } from '../graphql/queries'
 import { computed, ref } from 'vue'
+import { escapeHtml} from './useEscapeHtml'
 
 export const usePostCreate = () => {
   const { result } = useQuery(POSTS_QUERY)
@@ -13,8 +14,8 @@ export const usePostCreate = () => {
     POST_MUTATION,
     () => ({
       variables: {
-        title: title.value,
-        content: content.value,
+        title: escapeHtml(title.value),
+        content: escapeHtml(content.value),
       },
       update: (cache, { data: { postCreate }}) => {
         let data = cache.readQuery({ query: POSTS_QUERY })
