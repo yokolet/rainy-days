@@ -3,7 +3,7 @@ import { useAuthStore } from '../stores/auth';
 import { storeToRefs } from 'pinia';
 
 const store = useAuthStore();
-const {  userId, provider, imageUrl } = storeToRefs(store)
+const {  username, provider, imageUrl } = storeToRefs(store)
 store.updateUserData()
 </script>
 
@@ -18,8 +18,8 @@ store.updateUserData()
         bg-pink-800 dark:bg-pink-600 text-white rounded-full
         hover:scale-95 has-tooltip"
     >
-      {{ userId ? userId[0].toUpperCase() : ''}}
-      <span class="tooltip bg-slate-500 opacity-60 text-base">{{ userId }}</span>
+      {{ username ? username[0].toUpperCase() : ''}}
+      <span class="tooltip bg-slate-500 opacity-60 text-base">{{ username }}</span>
     </div>
   </div>
 </template>

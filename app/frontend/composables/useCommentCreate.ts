@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@vue/apollo-composable'
 import { POST_QUERY, COMMENT_MUTATION } from '../graphql/queries'
 import { computed, ref } from 'vue'
+import { escapeHtml} from './useEscapeHtml'
 
 export const useCommentCreate = (postId: string, replyId: string | null) => {
   const { result } = useQuery(POST_QUERY, () => ({ postId }))
@@ -12,7 +13,7 @@ export const useCommentCreate = (postId: string, replyId: string | null) => {
     COMMENT_MUTATION,
     () => ({
       variables: {
-        body: body.value,
+        body: escapeHtml(body.value),
         pid: postId,
         rid: replyId,
       },

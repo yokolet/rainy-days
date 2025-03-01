@@ -1,12 +1,9 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
 import { provideApolloClient } from '@vue/apollo-composable';
-// import { useToken } from '../composables/useToken';
 
-const GRAPHQL_ENDPOINT = 'http://localhost:3906/graphql';
+const GRAPHQL_ENDPOINT = `${window.location.protocol}//${window.location.host}/graphql`
 
-// TODO: use a real getJWT function once OAuth 2 starts working
-// const { getJWT } = useToken();
 
 const getJWT = (): string => 'TODO_sETRealjWt_token'
 
