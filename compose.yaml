@@ -12,6 +12,8 @@ services:
   web:
     build: .
     env_file: ".env"
+    environment:
+      - RAILS_MASTER_KEY
     ports:
       - "3906:3906"
     depends_on:
