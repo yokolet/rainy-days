@@ -12,7 +12,7 @@ module Resolvers
              description: 'User id'
 
     def resolve(id:)
-      User.where(id: id).select(:id, :provider, :email, :username, :image).first
+      User.where(id: id).select(:id, :provider, :username, :image).first
     end
   end
 end

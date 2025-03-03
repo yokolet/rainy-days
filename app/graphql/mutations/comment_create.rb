@@ -22,7 +22,7 @@ module Mutations
       sql = <<-SQL
 select
     comments.id, comments.body, comments.post_id, comments.reply_id,
-    comments.user_id, users.email, users.username,
+    comments.user_id, users.username,
     comments.updated_at
 from comments left join users on comments.user_id = users.id
 where comments.id = ?;
