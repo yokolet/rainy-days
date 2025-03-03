@@ -34,6 +34,8 @@ This is why the app is named like so.
   - Font Awesome
   - Tailwind CSS
   - TypeScript
+  - Responsive design
+  - Dark/Light mode switcher
 
 ### Versions
 - Ruby 3.4.1
