@@ -14,7 +14,7 @@ module Resolvers
     def resolve(id:)
       sql = <<-SQL
 select posts.id, posts.title, posts.content, posts.updated_at,
-       users.id as user_id, users.provider, users.email, users.username, users.image
+       users.id as user_id, users.provider, users.username, users.image
 from posts left join users on posts.user_id = users.id
 where posts.id = ?;
       SQL
@@ -27,7 +27,6 @@ where posts.id = ?;
           user: {
             id: e["user_id"],
             provider: User.providers.invert[e["provider"]],
-            email: e["email"],
             username: e["username"],
             image: e["image"]
           }
@@ -44,7 +43,7 @@ where posts.id = ?;
       sql = <<-SQL
 select
     comments.id, comments.body, comments.post_id, comments.reply_id,
-    comments.user_id, users.email, users.username,
+    comments.user_id, users.username,
     comments.updated_at
 from comments left join users on comments.user_id = users.id
 where post_id = ?;

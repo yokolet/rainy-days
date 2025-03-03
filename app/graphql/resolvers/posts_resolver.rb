@@ -10,10 +10,10 @@ module Resolvers
       sql = <<-SQL
 SELECT
     posts.id, posts.title, left(posts.content, 35) as excerpt, posts.updated_at,
-    users.email, users.username, count(comments.id) as comment_count
+    users.username, count(comments.id) as comment_count
 FROM "posts"
 left join users on posts.user_id = users.id left join comments on comments.post_id = posts.id
-                GROUP BY "posts"."id", "users"."email", "users"."username"
+                GROUP BY "posts"."id", "users"."username"
                 ORDER BY "posts"."updated_at" DESC
       SQL
       results = ActiveRecord::Base.connection.execute(sql)

@@ -34,6 +34,8 @@ This is why the app is named like so.
   - Font Awesome
   - Tailwind CSS
   - TypeScript
+  - Responsive design
+  - Dark/Light mode switcher
 
 ### Versions
 - Ruby 3.4.1
@@ -71,14 +73,14 @@ Once the apps are created, get client id and client secret combinations.
   - Redirect URI: http://localhost:3906/auth/gitlab/callback
 
 #### Source Code
-Cline the repo:
+Clone the repo:
 ```bash
 $ git clone git@gitlab.com:yokolet/rainy-days.git
 ```
 
 ##### Install the App
 ```bash
-$ cd rainy-day-blog
+$ cd rainy-days
 $ bundle install
 $ rails db:prepare
 $ bun install
@@ -115,7 +117,7 @@ oauth:
     client_secret: YOUR_GITLAB_CIENT_SECRET
 ```
 
-To generate a value for secret_key_base, try blow:
+To generate the secret_key_base value, try below:
 
 ```bash
 $ bin/rails secret
@@ -126,7 +128,8 @@ Then, copy & paste the value to credentials file.
 
 #### Run the app in development environment
 
-The command below is used for development and starts Rails and vite servers.
+This command starts Rails and vite servers in development environment.
+Both frontend and backend changes are reloaded and reflected to a web page.
 
 ```bash
 $ bin/dev
@@ -148,13 +151,13 @@ config.force_ssl = false
 Then, precompile assets:
 
 ```bash
-$ RAILS_ENV=production rails assets:precompile
+$ RAILS_ENV=production bin/rails assets:precompile
 ```
 
 Start the app　as in below:
 
 ```bash
-$ RAILS_ENV=production rails s -p 3906
+$ RAILS_ENV=production bin/rails s -p 3906
 ```
 
 If you change the port number:

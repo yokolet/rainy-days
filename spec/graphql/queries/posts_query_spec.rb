@@ -57,7 +57,6 @@ RSpec.describe "posts", type: :graphql do
         title
         excerpt
         commentCount
-        email
         username
         updatedAt
       }

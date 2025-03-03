@@ -8,7 +8,6 @@ import { storeToRefs } from 'pinia';
 export interface IComment {
   id: string
   body: string
-  email: string
   username: string
   updatedAt: string
   postId: string

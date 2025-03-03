@@ -7,7 +7,6 @@ export const POSTS_QUERY = gql`
             title
             excerpt
             commentCount
-            email
             username
             updatedAt
         }

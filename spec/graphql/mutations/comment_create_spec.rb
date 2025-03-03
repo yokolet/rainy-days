@@ -33,7 +33,6 @@ RSpec.describe "comment create", type: :graphql do
       expect(result.dig("data", "commentCreate", "comment", "id")).not_to be_nil
       expect(result.dig("data", "commentCreate", "comment", "body")).to eql(attrs[:body])
       expect(result.dig("data", "commentCreate", "comment", "username")).not_to be_nil
-      expect(result.dig("data", "commentCreate", "comment", "email")).to eql(user.email)
       expect(result.dig("data", "commentCreate", "comment", "updatedAt")).not_to be_nil
     end
   end
@@ -52,7 +51,6 @@ RSpec.describe "comment create", type: :graphql do
           postId
           replyId
           username
-          email
           updatedAt
         }
       }
