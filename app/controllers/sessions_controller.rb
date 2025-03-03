@@ -28,7 +28,11 @@ class SessionsController < ApplicationController
     end
 
     cookies["rainy-days"] = {
-      value: user_data.to_json,
+      value: {
+        username: user_data[:username],
+        provider: user_data[:provider],
+        image: user_data[:image]
+      }.to_json,
       httponly: false
     }
     redirect_to root_path, notice: "Logged In"

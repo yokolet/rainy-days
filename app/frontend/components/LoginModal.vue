@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAuthStore } from '../stores/auth';
-import { storeToRefs } from 'pinia';
 
 const props = defineProps<{ isOpen: boolean }>()
 defineEmits(['close'])
