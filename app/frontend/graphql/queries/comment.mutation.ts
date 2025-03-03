@@ -13,7 +13,6 @@ export const COMMENT_MUTATION = gql`
                 postId
                 replyId
                 username
-                email
                 updatedAt
             }
         }

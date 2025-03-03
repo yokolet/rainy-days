@@ -14,11 +14,9 @@ export const POST_QUERY = gql`
                 replyId
                 updatedAt
                 username
-                email
             }
             user {
                 id
-                email
                 username
                 provider
                 image

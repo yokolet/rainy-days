@@ -13,7 +13,6 @@ export const POST_MUTATION = gql`
                 updatedAt
                 user {
                     id
-                    email
                     username
                     provider
                 }
