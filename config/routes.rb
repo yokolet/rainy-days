@@ -18,10 +18,10 @@ Rails.application.routes.draw do
   root "home#index"
 
   # OAuth authentication routes
-  get '/sign_in/:provider', to: 'sessions#prepare'
-  get 'auth/:provider/callback', to: 'sessions#create'
-  delete '/sign_out', to: 'sessions#destroy', as: :sign_out
-  get '/auth/failure' => 'sessions#failure'
+  get "/sign_in/:provider", to: "sessions#prepare"
+  get "auth/:provider/callback", to: "sessions#create"
+  delete "/sign_out", to: "sessions#destroy", as: :sign_out
+  get "/auth/failure" => "sessions#failure"
 
   # All other routes -- client side routes
   get "*path", to: "home#index"
