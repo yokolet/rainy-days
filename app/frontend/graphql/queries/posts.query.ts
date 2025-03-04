@@ -1,14 +1,14 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag"
 
 export const POSTS_QUERY = gql`
-    query Posts {
-        posts {
-            id
-            title
-            excerpt
-            commentCount
-            username
-            updatedAt
-        }
+  query Posts {
+    posts {
+      id
+      title
+      excerpt
+      commentCount
+      username
+      updatedAt
     }
+  }
 `

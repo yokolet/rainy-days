@@ -7,7 +7,10 @@ interface ITree {
 }
 
 export const buildCommentTree = (comments: IComment[]) => {
-  const commentMap = comments.reduce((acc, comment) => ({...acc, [comment.id]: []}), {})
+  const commentMap = comments.reduce(
+    (acc, comment) => ({ ...acc, [comment.id]: [] }),
+    {},
+  )
   comments.forEach((comment) => {
     if (comment.replyId !== null) {
       commentMap[comment.replyId].push(comment)
