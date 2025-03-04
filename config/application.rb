@@ -49,6 +49,7 @@ module RainyDays
     config.generators.system_tests = nil
 
     # temporarily
-    config.action_controller.forgery_protection_origin_check = false
+    # possibly config/environments/production.rb's config.assume_ssl = false setting solves the origin mismatch issue.
+    #config.action_controller.forgery_protection_origin_check = false
   end
 end
