@@ -13,28 +13,28 @@ def seedUsers(emails, providers, usernames)
     {
       email: emails[0],
       provider: providers[0],
-      username: usernames[0],
+      username: usernames[0]
     },
     {
       email: emails[1],
       provider: providers[1],
-      username: usernames[1],
+      username: usernames[1]
     },
     {
       email: emails[2],
       provider: providers[2],
-      username: usernames[2],
+      username: usernames[2]
     },
     {
       email: emails[3],
       provider: providers[3],
-      username: usernames[3],
+      username: usernames[3]
     },
     {
       email: emails[4],
       provider: providers[4],
-      username: usernames[4],
-    },
+      username: usernames[4]
+    }
   ]
 
   User.upsert_all(
@@ -75,15 +75,15 @@ def seedPosts(emails, providers)
       user_id: user_ids[4],
       title:  "Wisely and slow; they stumble that run fast.",
       content: "See how she leans her cheek upon her hand. Oh, that I were a glove upon that hand that I might touch that cheek!"
-    },
+    }
   ]
 
   Post.upsert_all(posts)
 end
 
 def seedComments
-  user_ids = User.all.map {|u| u.id}    # five users exist
-  post_ids = Post.all.map {|e| e.id}    # five posts exist
+  user_ids = User.all.map { |u| u.id }    # five users exist
+  post_ids = Post.all.map { |e| e.id }    # five posts exist
   comments = [
     {
       user_id: user_ids[0],
@@ -119,28 +119,27 @@ def seedComments
       user_id: user_ids[2],
       post_id: post_ids[4],
       body: "Knowing where the trap is—that's the first step in evading it."
-    },
+    }
   ]
   Comment.upsert_all(comments)
-
 end
 
 def seedReplies
-  user_ids = User.all.map {|u| u.id}    # five users exist
-  post_ids = Comment.select(:post_id).group(:post_id).having("count(comments.id) > 1").map {|c| c.post_id}
+  user_ids = User.all.map { |u| u.id }    # five users exist
+  post_ids = Comment.select(:post_id).group(:post_id).having("count(comments.id) > 1").map { |c| c.post_id }
   comments_0 = Comment.where(post_id: post_ids[0])
   replies = [
     {
       user_id: user_ids[0],
       post_id: post_ids[0],
       reply_id: comments_0[0].id,
-      body: "My dear Piter, your pleasures are what tie you to me. How could I object to that?",
+      body: "My dear Piter, your pleasures are what tie you to me. How could I object to that?"
     },
     {
       user_id: user_ids[1],
       post_id: post_ids[0],
       reply_id: comments_0[1].id,
-      body: "The spice must flow",
+      body: "The spice must flow"
     }
   ]
   comments_1 = Comment.where(post_id: post_ids[1])
@@ -148,16 +147,16 @@ def seedReplies
     user_id: user_ids[2],
     post_id: post_ids[1],
     reply_id: comments_1[0].id,
-    body: "Bring in that floating fat man, the Baron!",
+    body: "Bring in that floating fat man, the Baron!"
   }
   Comment.upsert_all(replies)
 end
 
-emails = ["rank@koelpin.test", "waldo.reynolds@nikolaus.test", "lessie@hegmann-kuhlman.example",
-               "fumiko@weber.example", "evalyn.macejkovic@torp.example"]
-providers = [:google, :gitlab, :github, :google, :github]
-usernames = ["Amber", "dannette.rau", "clemencia",
-        "Teri", "latia.streich"]
+emails = [ "rank@koelpin.test", "waldo.reynolds@nikolaus.test", "lessie@hegmann-kuhlman.example",
+               "fumiko@weber.example", "evalyn.macejkovic@torp.example" ]
+providers = [ :google, :gitlab, :github, :google, :github ]
+usernames = [ "Amber", "dannette.rau", "clemencia",
+        "Teri", "latia.streich" ]
 
 seedUsers(emails, providers, usernames)
 seedPosts(emails, providers)

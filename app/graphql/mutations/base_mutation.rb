@@ -22,8 +22,8 @@ module Mutations
     end
 
     def execute_sql(sql, params)
-      cleaned_sql = Post.sanitize_sql_array([sql, *params])
-      ActiveRecord::Base.connection.execute(cleaned_sql).map {|e| e}
+      cleaned_sql = Post.sanitize_sql_array([ sql, *params ])
+      ActiveRecord::Base.connection.execute(cleaned_sql).map { |e| e }
     end
   end
 end

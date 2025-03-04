@@ -27,7 +27,7 @@ module RainyDays
       # GraphQL-Ruby query log tags:
       current_graphql_operation: -> { GraphQL::Current.operation_name },
       current_graphql_field: -> { GraphQL::Current.field&.path },
-      current_dataloader_source: -> { GraphQL::Current.dataloader_source_class },
+      current_dataloader_source: -> { GraphQL::Current.dataloader_source_class }
     ]
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
@@ -50,6 +50,6 @@ module RainyDays
 
     # temporarily
     # possibly config/environments/production.rb's config.assume_ssl = false setting solves the origin mismatch issue.
-    #config.action_controller.forgery_protection_origin_check = false
+    # config.action_controller.forgery_protection_origin_check = false
   end
 end

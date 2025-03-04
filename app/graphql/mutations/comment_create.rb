@@ -27,7 +27,7 @@ select
 from comments left join users on comments.user_id = users.id
 where comments.id = ?;
       SQL
-      result = execute_sql(sql, [comment.id]).first
+      result = execute_sql(sql, [ comment.id ]).first
       { comment: result }
     rescue => e
       raise GraphQL::ExecutionError.new(

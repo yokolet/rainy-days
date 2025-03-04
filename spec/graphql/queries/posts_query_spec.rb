@@ -32,7 +32,7 @@ RSpec.describe "posts", type: :graphql do
     it "should return comment count of 2 and 3" do
       result = RainyDaysSchema.execute(query)
       expect(result.dig("data", "posts").length).to eq(2)
-      expect(result.dig("data", "posts").map {|e| e["commentCount"]}).to match_array([2, 3])
+      expect(result.dig("data", "posts").map { |e| e["commentCount"] }).to match_array([ 2, 3 ])
     end
   end
 

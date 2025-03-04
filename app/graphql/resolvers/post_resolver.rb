@@ -4,12 +4,12 @@ module Resolvers
   class PostResolver < BaseResolver
     type Types::PostType, null: false
 
-    description 'Get a single post'
+    description "Get a single post"
 
     argument :id,
              type: ::GraphQL::Types::ID,
              required: true,
-             description: 'Post id'
+             description: "Post id"
 
     def resolve(id:)
       sql = <<-SQL
@@ -18,7 +18,7 @@ select posts.id, posts.title, posts.content, posts.updated_at,
 from posts left join users on posts.user_id = users.id
 where posts.id = ?;
       SQL
-      post = execute_sql(sql, [id]).map do |e|
+      post = execute_sql(sql, [ id ]).map do |e|
         {
           id: e["id"],
           title: e["title"],
@@ -48,7 +48,7 @@ select
 from comments left join users on comments.user_id = users.id
 where post_id = ?;
       SQL
-      comments = execute_sql(sql, [id])
+      comments = execute_sql(sql, [ id ])
       post[:comments] = comments
       post
     rescue => e
@@ -62,8 +62,8 @@ where post_id = ?;
     private
 
     def execute_sql(sql, params)
-      cleaned_sql = Post.sanitize_sql_array([sql, *params])
-      ActiveRecord::Base.connection.execute(cleaned_sql).map {|e| e}
+      cleaned_sql = Post.sanitize_sql_array([ sql, *params ])
+      ActiveRecord::Base.connection.execute(cleaned_sql).map { |e| e }
     end
   end
 end

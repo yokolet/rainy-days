@@ -46,7 +46,7 @@ RSpec.describe "Sessions", type: :request do
                     "access_token": "google-access-token",
                     "token_type": "bearer",
                     "expires_in": 7200,
-                    "refresh_token": "google-refresh-token",
+                    "refresh_token": "google-refresh-token"
                   }.to_json,
                   headers: {})
 
@@ -87,7 +87,7 @@ RSpec.describe "Sessions", type: :request do
             "client_secret" => Rails.application.credentials.oauth.github.client_secret.strip,
             "code" => "long-alpha-numeric-code",
             "grant_type" => "authorization_code",
-            "redirect_uri" => "http://localhost:3906/auth/github/callback"},
+            "redirect_uri" => "http://localhost:3906/auth/github/callback" },
           headers: {
             'Accept'=>'application/json',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -98,7 +98,7 @@ RSpec.describe "Sessions", type: :request do
                   body: {
                     "access_token": "github-access-token",
                     "token_type": "bearer",
-                    "scope": "user",
+                    "scope": "user"
                   }.to_json,
                   headers: {})
 
@@ -123,7 +123,7 @@ RSpec.describe "Sessions", type: :request do
           params: {
             "state" => "some-state",
             "code" => "long-alpha-numeric-code",
-            "scope" => "scopeC",
+            "scope" => "scopeC"
           }
       expect(User.count).to eq(prev_count + 1)
       expect(response).to be_redirect
@@ -153,7 +153,7 @@ RSpec.describe "Sessions", type: :request do
                     "access_token": "gitlab-access-token",
                     "token_type": "bearer",
                     "expires_in": 7200,
-                    "refresh_token": "gitlab-refresh-token",
+                    "refresh_token": "gitlab-refresh-token"
                   }.to_json,
                   headers: {})
 
@@ -178,7 +178,7 @@ RSpec.describe "Sessions", type: :request do
           params: {
             "state" => "some-state",
             "code" => "long-alpha-numeric-code",
-            "scope" => "scopeD",
+            "scope" => "scopeD"
           }
       expect(User.count).to eq(prev_count + 1)
       expect(response).to be_redirect
@@ -191,5 +191,4 @@ RSpec.describe "Sessions", type: :request do
       expect(response).to have_http_status(:success)
     end
   end
-
 end
