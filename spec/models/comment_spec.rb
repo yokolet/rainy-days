@@ -6,5 +6,4 @@ RSpec.describe Comment, type: :model do
   it { should validate_length_of(:body).is_at_least(1).is_at_most(300) }
   it { should belong_to(:user) }
   it { should belong_to(:post) }
-
 end
