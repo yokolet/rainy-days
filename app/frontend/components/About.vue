@@ -1,14 +1,17 @@
 <script setup lang="ts">
-import { marked } from 'marked'
-import aboutContent from '../assets/about.md?raw'
-import { computed } from 'vue';
+import { marked } from "marked"
+import aboutContent from "../assets/about.md?raw"
+import { computed } from "vue"
 
 const about = computed(() => marked.parse(aboutContent))
 </script>
 
 <template>
   <section id="about-app">
-    <div class="text-sm bg-white dark:bg-zinc-700 text-teal-950 dark:text-teal-50 font-roboto-mono m-4 p-4 rounded-md">
+    <div
+      class="m-4 rounded-md bg-white p-4 font-roboto-mono text-sm text-teal-950
+        dark:bg-zinc-700 dark:text-teal-50"
+    >
       <div v-html="about"></div>
     </div>
   </section>
@@ -16,10 +19,10 @@ const about = computed(() => marked.parse(aboutContent))
 
 <style scoped>
 #about-app :deep(h2) {
-  @apply text-gray-800 dark:text-gray-200 font-bold text-base;
+  @apply text-base font-bold text-gray-800 dark:text-gray-200;
 }
 
 #about-app :deep(ul) {
-  @apply list-disc ml-4;
+  @apply ml-4 list-disc;
 }
 </style>

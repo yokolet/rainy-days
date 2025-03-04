@@ -33,14 +33,14 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 # Vite
-gem 'vite_rails', '~> 3.0', '>= 3.0.19'
-gem 'foreman', '~> 0.88.1'
+gem "vite_rails", "~> 3.0", ">= 3.0.19"
+gem "foreman", "~> 0.88.1"
 
 # REST API client
-gem 'faraday', '~> 2.12', '>= 2.12.2'
+gem "faraday", "~> 2.12", ">= 2.12.2"
 
 # GraphQL
-gem 'graphql', '~> 2.4', '>= 2.4.9'
+gem "graphql", "~> 2.4", ">= 2.4.9"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

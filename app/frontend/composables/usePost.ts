@@ -1,6 +1,6 @@
-import { useQuery } from '@vue/apollo-composable'
-import { POST_QUERY } from '../graphql/queries'
-import { computed } from 'vue'
+import { useQuery } from "@vue/apollo-composable"
+import { POST_QUERY } from "../graphql/queries"
+import { computed } from "vue"
 
 export const usePost = (id: string) => {
   const { result, loading, error } = useQuery(POST_QUERY, () => ({ id }))
@@ -10,6 +10,6 @@ export const usePost = (id: string) => {
   return {
     post,
     loading,
-    error
+    error,
   }
 }

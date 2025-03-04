@@ -11,6 +11,7 @@ This is a portfolio app by Ruby on Rails and Vue.js to showcase my skill set.
 <br />
 
 ## How to Use
+
 - Everybody can see all posts and comments regardless of login status.
 - To write a post, comment or reply, login by Google, GitHub or GitLab.
 - Comments can be added to posts and other comments.
@@ -21,7 +22,9 @@ This is a portfolio app by Ruby on Rails and Vue.js to showcase my skill set.
 <br />
 
 ## Technologies
+
 - Backend
+
   - Ruby on Rails: version 8.0.1
   - PostgreSQL
   - RSpec
@@ -39,4 +42,3 @@ This is a portfolio app by Ruby on Rails and Vue.js to showcase my skill set.
   - Vue Apollo
   - Tailwind CSS
   - Font Awesome
-
