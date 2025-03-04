@@ -15,7 +15,7 @@ module Mutations
       post = ::Post.new(**post_input)
       raise GraphQL::ExecutionError.new(
         GraphqlErrorType::POST_CREATE_ERROR,
-        extensions: {code: GraphqlErrorType::POST_CREATE_ERROR}
+        extensions: { code: GraphqlErrorType::POST_CREATE_ERROR }
       ) unless post.save
 
       sql = <<-SQL
@@ -24,7 +24,7 @@ select posts.id, posts.title, posts.content, posts.updated_at,
 from posts left join users on posts.user_id = users.id
 where posts.id = ?;
       SQL
-      post_type = execute_sql(sql, [post.id]).map do |e|
+      post_type = execute_sql(sql, [ post.id ]).map do |e|
         {
           id: e["id"],
           title: e["title"],

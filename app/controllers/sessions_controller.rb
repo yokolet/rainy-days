@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
       session[:email] = user_data[:email]
     else
       session[:email] = nil
-      raise('Failed to find or update user')
+      raise("Failed to find or update user")
     end
 
     cookies["rainy-days"] = {
@@ -39,7 +39,7 @@ class SessionsController < ApplicationController
   rescue => e
     Rails.logger.error(e.to_s)
     cookies["rainy-days"] = {
-      value: {error: e.to_s}.to_json,
+      value: { error: e.to_s }.to_json,
       httponly: false
     }
     redirect_to root_path, alert: "Failure"
@@ -74,8 +74,8 @@ class SessionsController < ApplicationController
     conn = Faraday.new(
       url: params[:endpoint][:url],
       headers: {
-        'Content-Type' => 'application/x-www-form-urlencoded',
-        'Accept' => 'application/json',
+        "Content-Type" => "application/x-www-form-urlencoded",
+        "Accept" => "application/json"
       }
     )
     response = conn.post(params[:endpoint][:path],
@@ -89,7 +89,7 @@ class SessionsController < ApplicationController
     conn = Faraday.new(
       url: user_params[:endpoint][:url],
       headers: {
-        'Authorization' => "Bearer #{access_token}",
+        "Authorization" => "Bearer #{access_token}"
       }
     )
     response = conn.get(user_params[:endpoint][:path])
@@ -100,8 +100,8 @@ class SessionsController < ApplicationController
     keys = key_params(provider)
 
     user = keys.map do |key, value|
-      [key, user_info[value]]
+      [ key, user_info[value] ]
     end.to_h
-    user.merge({provider: provider})
+    user.merge({ provider: provider })
   end
 end

@@ -2,9 +2,9 @@
 
 module Resolvers
   class PostsResolver < BaseResolver
-    type [Types::PostsType], null: true
+    type [ Types::PostsType ], null: true
 
-    description 'Gets a post list'
+    description "Gets a post list"
 
     def resolve
       sql = <<-SQL
@@ -17,7 +17,7 @@ left join users on posts.user_id = users.id left join comments on comments.post_
                 ORDER BY "posts"."updated_at" DESC
       SQL
       results = ActiveRecord::Base.connection.execute(sql)
-      results.map {|e| e}
+      results.map { |e| e }
     end
   end
 end
