@@ -1,0 +1,52 @@
+image: ruby:3.4.1
+
+services:
+  - postgres:16
+
+variables:
+  POSTGRES_DB: test_db
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: ""
+  POSTGRES_HOST_AUTH_METHOD: trust
+
+# Cache gems in between builds
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+    - bun.lock
+
+stages:
+  - test
+#  - deploy
+
+.base_setup:
+  variables:
+    RAILS_ENV: test
+
+  before_script:
+    - ruby -v  # Print out ruby version
+    - apt-get update -qq && apt-get install -y -qq postgresql postgresql-contrib libpq-dev
+    - apt-get update -qq && apt-get install -y -qq nodejs npm cmake unzip
+    - curl -o- -fsSL https://bun.sh/install | bash
+    - export PATH="$HOME/.bun/bin:$PATH"
+    - bun -v # print out bun version
+    - bun install
+    - bundle config set --local path 'vendor'
+    - bundle install -j $(nproc)
+    - echo "$RAILS_TEST_KEY" | tr -d '\r' > config/credentials/test.key
+    - cp config/database.yml.ci config/database.yml
+    - bundle exec rails db:test:prepare
+
+rspec:
+  extends: .base_setup
+  stage: test
+  script:
+    - bundle exec rspec
+  except:
+    - main
+  artifacts:
+    when: on_failure
+    paths:
+      - log/test.log
+    expire_in: 1 week

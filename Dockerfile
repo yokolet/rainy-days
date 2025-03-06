@@ -46,8 +46,10 @@ COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 
 
-RUN apt-get update -qq && apt-get install -y -qq nodejs npm postgresql-client
-RUN npm install --force
+RUN apt-get update -qq && apt-get install -y -qq nodejs npm cmake unzip
+RUN curl -o- -fsSL https://bun.sh/install | bash && \
+  ln -s $HOME/.bun/bin/bun /usr/local/bin/bun
+RUN bun install
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
