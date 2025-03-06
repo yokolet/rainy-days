@@ -27,7 +27,7 @@ stages:
   before_script:
     - ruby -v  # Print out ruby version
     - apt-get update -qq && apt-get install -y -qq postgresql postgresql-contrib libpq-dev
-    - apt-get update -qq && apt-get install -y -qq nodejs cmake unzip
+    - apt-get update -qq && apt-get install -y -qq nodejs npm cmake unzip
     - curl -o- -fsSL https://bun.sh/install | bash
     - export PATH="$HOME/.bun/bin:$PATH"
     - bun -v # print out bun version
