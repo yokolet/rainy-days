@@ -18,8 +18,7 @@ cache:
 
 stages:
   - test
-  - build
-#  - deploy
+#  - build    # Docker instance has a secret key issue. For now, the building stage sets off.
 
 .base_setup:
   variables:
