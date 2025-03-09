@@ -18,7 +18,7 @@ cache:
 
 stages:
   - test
-#  - build    # Docker instance has a secret key issue. For now, the building stage sets off.
+  - build
 
 .base_setup:
   variables:
@@ -53,11 +53,13 @@ rspec:
 
 build:
   stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   image: docker:27.5.1
   services:
     - docker:dind
   before_script:
-    - echo "$RAILS_PRODUCTION_KEY" | tr -d '\r' > config/credentials/production.key
+    - export RAILS_MASTER_KEY=$RAILS_MASTER_KEY
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG .
