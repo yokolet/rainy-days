@@ -59,7 +59,7 @@ build:
   services:
     - docker:dind
   before_script:
-    - export RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+    - export RAILS_MASTER_KEY=$RAILS_PRODUCTION_KEY
   script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG .
