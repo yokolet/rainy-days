@@ -21,6 +21,14 @@ This is a portfolio app by Ruby on Rails and Vue.js to showcase my skill set.
 <br />
 <br />
 
+## Known Issue
+
+When a reply is added to another comment, the newly added comment doesn't show up immediately.
+Reload the page. The new comment will appear as a nested comment.
+
+<br />
+<br />
+
 ## Technologies
 
 - Backend
