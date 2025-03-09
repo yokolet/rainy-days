@@ -44,9 +44,9 @@ This is why the app is named like so.
 - Bun 1.2.1
 - Vue.js 3.5.13
 
-### How to Run the App
+## How to Run the App
 
-#### Prerequisite
+### Prerequisite
 
 Install below:
 - Ruby [https://www.ruby-lang.org/en/](https://www.ruby-lang.org/en/)
@@ -72,13 +72,13 @@ Once the apps are created, get client id and client secret combinations.
   - Configure GitLab as an OAuth 2.0 authentication identity provider: https://docs.gitlab.com/integration/oauth_provider/
   - Redirect URI: http://localhost:3906/auth/gitlab/callback
 
-#### Source Code
+### Source Code
 Clone the repo:
 ```bash
 $ git clone git@gitlab.com:yokolet/rainy-days.git
 ```
 
-##### Install the App
+#### Install the App
 ```bash
 $ cd rainy-days
 $ bundle install
@@ -86,7 +86,7 @@ $ rails db:prepare
 $ bun install
 ```
 
-##### Setup Credentials
+#### Setup Credentials
 
 Create credentials for three environments as in below:
 
@@ -126,7 +126,7 @@ $ bin/rails secret
 Then, copy & paste the value to credentials file.
 
 
-#### Run the app in development environment
+### Run the app in development environment
 
 This command starts Rails and vite servers in development environment.
 Both frontend and backend changes are reloaded and reflected to a web page.
@@ -138,7 +138,7 @@ $ bin/dev
 Once, the servers start successfully, go to http://localhost:3906
 
 
-#### Run the app in production environment
+### Run the app in production environment
 
 When the app runs without SSL in production environment,
 set two config parameters to false in `config/environments/production.rb`:
@@ -164,7 +164,7 @@ If you change the port number:
 - Change the port number of redirect URI at identity providers: Google, GitHub and GitLab
 - Change the redirect URIs in credentials files: config/credentials/[development|poduction|test].yml.enc
 
-#### Run the app in Docker
+### Run the app in Docker
 
 Create `.env` file with the content below:
 ```bash
@@ -185,3 +185,9 @@ Go to http://localhost:3906
 ```bash
 $ bundle exec rspec
 ```
+
+## Live Site
+
+The application is live at Render:
+
+[https://blogging-in-rainy-days.onrender.com/](https://blogging-in-rainy-days.onrender.com/)
