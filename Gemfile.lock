@@ -130,7 +130,7 @@ GEM
       activesupport (>= 6.1)
     graphiql-rails (1.10.4)
       railties
-    graphql (2.4.11)
+    graphql (2.4.14)
       base64
       fiber-storage
       logger
@@ -406,7 +406,7 @@ DEPENDENCIES
   faraday (~> 2.12, >= 2.12.2)
   foreman (~> 0.88.1)
   graphiql-rails
-  graphql (~> 2.4, >= 2.4.9)
+  graphql (~> 2.4)
   jbuilder
   kamal
   pg (~> 1.1)
