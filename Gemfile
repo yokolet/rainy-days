@@ -30,7 +30,7 @@ gem "bootsnap", require: false
 gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem "thruster", require: false
+gem 'thruster', '~> 0.1.13', require: false
 
 # Vite
 gem "vite_rails", "~> 3.0", ">= 3.0.19"
