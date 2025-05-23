@@ -85,7 +85,7 @@ GEM
     brakeman (7.0.0)
       racc
     builder (3.3.0)
-    byebug (11.1.3)
+    byebug (12.0.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.0)
     crack (1.0.0)
@@ -398,7 +398,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap
   brakeman
-  byebug
+  byebug (~> 12.0)
   database_cleaner-active_record
   debug
   factory_bot_rails

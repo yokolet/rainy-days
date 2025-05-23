@@ -61,7 +61,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rspec-graphql_matchers"
 
-  gem "byebug"
+  gem 'byebug', '~> 12.0'
 end
 
 group :development do
