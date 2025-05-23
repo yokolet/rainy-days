@@ -374,7 +374,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webmock (3.25.0)
+    webmock (3.25.1)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -423,10 +423,10 @@ DEPENDENCIES
   tzinfo-data
   vite_rails (~> 3.0, >= 3.0.19)
   web-console
-  webmock
+  webmock (~> 3.25, >= 3.25.1)
 
 RUBY VERSION
    ruby 3.4.4p34
 
 BUNDLED WITH
-   2.6.5
+   2.6.9
