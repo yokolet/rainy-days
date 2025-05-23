@@ -326,7 +326,7 @@ GEM
       rubocop-rails (>= 2.30)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
-    shoulda-matchers (6.4.0)
+    shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
     solid_cache (1.0.7)
       activejob (>= 7.2)
@@ -416,7 +416,7 @@ DEPENDENCIES
   rspec-graphql_matchers
   rspec-rails (~> 7.1)
   rubocop-rails-omakase
-  shoulda-matchers
+  shoulda-matchers (~> 6.5)
   solid_cache
   solid_queue (~> 1.1, >= 1.1.5)
   thruster (~> 0.1.13)

@@ -54,7 +54,7 @@ group :development, :test do
 
   # RSpec
   gem "rspec-rails", "~> 7.1"
-  gem "shoulda-matchers"
+  gem 'shoulda-matchers', '~> 6.5'
   gem "database_cleaner-active_record"
   gem 'webmock', '~> 3.25', '>= 3.25.1'
   gem "faker"
