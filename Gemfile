@@ -53,7 +53,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec
-  gem "rspec-rails", "~> 7.1"
+  gem 'rspec-rails', '~> 8.0'
   gem 'shoulda-matchers', '~> 6.5'
   gem "database_cleaner-active_record"
   gem 'webmock', '~> 3.25', '>= 3.25.1'
