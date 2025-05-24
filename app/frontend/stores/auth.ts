@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import axios from "axios"
+import * as cookie from 'cookie'
 
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref<boolean>(false)
@@ -26,13 +27,13 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   const updateUserData = () => {
-    const cookieHeader = "rainy-days="
-    if (document.cookie.startsWith(cookieHeader)) {
-      const decodedCookie = decodeURIComponent(document.cookie)
-      const cookieValues = JSON.parse(decodedCookie.slice(cookieHeader.length))
-      username.value = cookieValues.username
-      provider.value = cookieValues.provider
-      imageUrl.value = cookieValues.image_url
+    const local_cookies = cookie.parse(document.cookie)
+    if (local_cookies && "rainy-days" in local_cookies) {
+      const cookieValues = local_cookies['rainy-days']
+      const cookieObject = JSON.parse(cookieValues)
+      username.value = cookieObject.username
+      provider.value = cookieObject.provider
+      imageUrl.value = cookieObject.image
       isAuthenticated.value = !!(username.value && provider.value)
     }
   }
