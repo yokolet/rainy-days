@@ -21,16 +21,16 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache and Active Job
 gem "solid_cache"
-gem 'solid_queue', '~> 1.2', '>= 1.2.1'
+gem "solid_queue", "~> 1.2", ">= 1.2.1"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.18', '>= 1.18.6', require: false
+gem "bootsnap", "~> 1.18", ">= 1.18.6", require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem 'kamal', '~> 2.7', require: false
+gem "kamal", "~> 2.7", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem 'thruster', '~> 0.1.14', require: false
+gem "thruster", "~> 0.1.14", require: false
 
 # Vite
 gem "vite_rails", "~> 3.0", ">= 3.0.19"
@@ -47,7 +47,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', '~> 7.1', require: false
+  gem "brakeman", "~> 7.1", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
@@ -55,7 +55,7 @@ group :development, :test do
   # RSpec
   gem "rspec-rails", "~> 8.0"
   gem "shoulda-matchers", "~> 6.5"
-  gem 'database_cleaner-active_record', '~> 2.2', '>= 2.2.2'
+  gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
   gem "faker"
   gem "factory_bot_rails"
@@ -67,5 +67,5 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'graphiql-rails', '~> 1.10', '>= 1.10.5'
+  gem "graphiql-rails", "~> 1.10", ">= 1.10.5"
 end
