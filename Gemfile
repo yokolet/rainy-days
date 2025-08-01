@@ -27,10 +27,10 @@ gem "solid_queue", "~> 1.1", ">= 1.1.5"
 gem 'bootsnap', '~> 1.18', '>= 1.18.6', require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
+gem 'kamal', '~> 2.7', require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem "thruster", "~> 0.1.13", require: false
+gem 'thruster', '~> 0.1.14', require: false
 
 # Vite
 gem "vite_rails", "~> 3.0", ">= 3.0.19"
