@@ -57,7 +57,7 @@ group :development, :test do
   gem "shoulda-matchers", "~> 6.5"
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
-  gem "faker"
+  gem "faker", "~> 3.5", ">= 3.5.2"
   gem "factory_bot_rails"
   gem "rspec-graphql_matchers"
 
