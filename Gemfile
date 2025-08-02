@@ -34,7 +34,7 @@ gem "thruster", "~> 0.1.14", require: false
 
 # Vite
 gem "vite_rails", "~> 3.0", ">= 3.0.19"
-gem "foreman", "~> 0.88.1"
+gem "foreman", "~> 0.90.0"
 
 # REST API client
 gem "faraday", "~> 2.13", ">= 2.13.1"
@@ -53,11 +53,11 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec
-  gem "rspec-rails", "~> 8.0"
+  gem "rspec-rails", "~> 8.0", ">= 8.0.1"
   gem "shoulda-matchers", "~> 6.5"
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
-  gem "faker"
+  gem "faker", "~> 3.5", ">= 3.5.2"
   gem "factory_bot_rails"
   gem "rspec-graphql_matchers"
 
