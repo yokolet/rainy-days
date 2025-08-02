@@ -34,7 +34,7 @@ gem "thruster", "~> 0.1.14", require: false
 
 # Vite
 gem "vite_rails", "~> 3.0", ">= 3.0.19"
-gem "foreman", "~> 0.88.1"
+gem "foreman", "~> 0.90.0"
 
 # REST API client
 gem "faraday", "~> 2.13", ">= 2.13.1"
