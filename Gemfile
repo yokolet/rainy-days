@@ -5,9 +5,10 @@ ruby "3.4.4"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0", ">= 8.0.2"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem 'propshaft', '~> 1.2', '>= 1.2.1'
+gem "propshaft", "~> 1.2", ">= 1.2.1"
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.6", ">= 1.6.1"
+
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
@@ -44,7 +45,7 @@ gem "graphql", "~> 2.5", ">= 2.5.7"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", "~> 1.11", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", "~> 7.1", require: false
@@ -58,7 +59,7 @@ group :development, :test do
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
   gem "faker", "~> 3.5", ">= 3.5.2"
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", "~> 6.5"
   gem "rspec-graphql_matchers"
 
   gem "byebug", "~> 12.0"
