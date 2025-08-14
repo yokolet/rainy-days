@@ -38,7 +38,7 @@ gem "vite_rails", "~> 3.0", ">= 3.0.19"
 gem "foreman", "~> 0.90.0"
 
 # REST API client
-gem "faraday", "~> 2.13", ">= 2.13.1"
+gem "faraday", "~> 2.13"
 
 # GraphQL
 gem "graphql", "~> 2.5", ">= 2.5.7"
