@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.4.4"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0", ">= 8.0.2"
+gem "rails", "~> 8.0", ">= 8.0.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft", "~> 1.2", ">= 1.2.1"
 # Use postgresql as the database for Active Record
@@ -12,7 +12,7 @@ gem "pg", "~> 1.6", ">= 1.6.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
+gem "jbuilder", "~> 2.14", ">= 2.14.1"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -38,10 +38,10 @@ gem "vite_rails", "~> 3.0", ">= 3.0.19"
 gem "foreman", "~> 0.90.0"
 
 # REST API client
-gem "faraday", "~> 2.13", ">= 2.13.1"
+gem "faraday", "~> 2.13", ">= 2.13.4"
 
 # GraphQL
-gem "graphql", "~> 2.5", ">= 2.5.7"
+gem "graphql", "~> 2.5", ">= 2.5.11"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

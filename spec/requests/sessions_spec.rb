@@ -39,7 +39,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'application/json',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Content-Type'=>'application/x-www-form-urlencoded',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).
         to_return(status: 200,
                   body: {
@@ -56,7 +56,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization'=>'Bearer google-access-token',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).to_return(status: 200,
                        body: {
                          "email": Faker::Internet.email,
@@ -92,7 +92,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'application/json',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Content-Type'=>'application/x-www-form-urlencoded',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).
         to_return(status: 200,
                   body: {
@@ -108,7 +108,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization'=>'Bearer github-access-token',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).
         to_return(status: 200,
                        body: {
@@ -146,7 +146,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'application/json',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Content-Type'=>'application/x-www-form-urlencoded',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).
         to_return(status: 200,
                   body: {
@@ -163,7 +163,7 @@ RSpec.describe "Sessions", type: :request do
             'Accept'=>'*/*',
             'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
             'Authorization'=>'Bearer gitlab-access-token',
-            'User-Agent'=>'Faraday v2.13.1'
+            'User-Agent'=>'Faraday v2.13.4'
           }).
         to_return(status: 200,
                        body: {
