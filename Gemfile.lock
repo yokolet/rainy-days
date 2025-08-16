@@ -353,10 +353,10 @@ GEM
       ostruct
     stringio (3.1.5)
     thor (1.4.0)
-    thruster (0.1.14)
-    thruster (0.1.14-aarch64-linux)
-    thruster (0.1.14-x86_64-darwin)
-    thruster (0.1.14-x86_64-linux)
+    thruster (0.1.15)
+    thruster (0.1.15-aarch64-linux)
+    thruster (0.1.15-x86_64-darwin)
+    thruster (0.1.15-x86_64-linux)
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -424,7 +424,7 @@ DEPENDENCIES
   shoulda-matchers (~> 6.5)
   solid_cache
   solid_queue (~> 1.2, >= 1.2.1)
-  thruster (~> 0.1.14)
+  thruster (~> 0.1.15)
   tzinfo-data
   vite_rails (~> 3.0, >= 3.0.19)
   web-console
