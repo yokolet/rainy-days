@@ -10,7 +10,7 @@ gem "propshaft", "~> 1.2", ">= 1.2.1"
 gem "pg", "~> 1.6", ">= 1.6.1"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", ">= 5.0"
+gem "puma", "~> 6.6", ">= 6.6.1"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.14", ">= 2.14.1"
 
@@ -54,7 +54,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   # RSpec
-  gem "rspec-rails", "~> 8.0", ">= 8.0.1"
+  gem "rspec-rails", "~> 8.0", ">= 8.0.2"
   gem "shoulda-matchers", "~> 6.5"
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
