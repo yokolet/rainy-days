@@ -6,11 +6,13 @@ ruby "3.4.4"
 gem "rails", "~> 8.0", ">= 8.0.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft", "~> 1.2", ">= 1.2.1"
+
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.6", ">= 1.6.1"
+gem "pg", "~> 1.6", ">= 1.6.2"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 6.6", ">= 6.6.1"
+gem "puma", "~> 7.0", ">= 7.0.2"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.14", ">= 2.14.1"
 
@@ -59,7 +61,7 @@ group :development, :test do
   gem "database_cleaner-active_record", "~> 2.2", ">= 2.2.2"
   gem "webmock", "~> 3.25", ">= 3.25.1"
   gem "faker", "~> 3.5", ">= 3.5.2"
-  gem "factory_bot_rails", "~> 6.5"
+  gem "factory_bot_rails", "~> 6.5", ">= 6.5.1"
   gem "rspec-graphql_matchers"
 
   gem "byebug", "~> 12.0"
