@@ -5,7 +5,7 @@ ruby "3.4.4"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0", ">= 8.0.2.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft", "~> 1.2", ">= 1.2.1"
+gem "propshaft", "~> 1.3"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.6", ">= 1.6.2"
