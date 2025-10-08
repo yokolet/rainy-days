@@ -43,7 +43,7 @@ gem "foreman", "~> 0.90.0"
 gem "faraday", "~> 2.13", ">= 2.13.4"
 
 # GraphQL
-gem "graphql", "~> 2.5", ">= 2.5.11"
+gem "graphql", "~> 2.5"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
