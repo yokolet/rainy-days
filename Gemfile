@@ -5,7 +5,7 @@ ruby "3.4.4"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0", ">= 8.0.3"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem "propshaft", "~> 1.2", ">= 1.2.1"
+gem "propshaft", "~> 1.3", ">= 1.3.1"
 
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.6", ">= 1.6.2"
@@ -43,7 +43,7 @@ gem "foreman", "~> 0.90.0"
 gem "faraday", "~> 2.13", ">= 2.13.4"
 
 # GraphQL
-gem "graphql", "~> 2.5", ">= 2.5.11"
+gem "graphql", "~> 2.5", ">= 2.5.14"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
