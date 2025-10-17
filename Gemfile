@@ -11,7 +11,7 @@ gem "propshaft", "~> 1.3", ">= 1.3.1"
 gem "pg", "~> 1.6", ">= 1.6.2"
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 7.0", ">= 7.0.4"
+gem "puma", "~> 7.1"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder", "~> 2.14", ">= 2.14.1"
